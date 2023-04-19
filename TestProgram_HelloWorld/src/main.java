@@ -6,6 +6,7 @@ public class main {
 		System.out.println("First New Line");
 		System.out.println("Second New Line");
 		System.out.println("Third New Line");
+		System.out.println("Fourth New Line"); //Nabil's new update.
 		System.exit(0);
 	}
 
