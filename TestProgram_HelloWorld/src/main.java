@@ -6,8 +6,15 @@ public class main {
 		System.out.println("First New Line");
 		System.out.println("Second New Line");
 		System.out.println("Third New Line");
-		System.out.println("Fourth New Line"); //Nabil's new update.
+		System.out.println("Fourth New Line");
+		printStatement();
 		System.exit(0);
+		
+		
+	}
+	
+	public static void printStatement() {
+		System.out.println("Printed from function"); //Nabil's new update.
 	}
 
 }
