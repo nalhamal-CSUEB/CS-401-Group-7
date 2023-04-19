@@ -8,7 +8,8 @@ public class main {
 		System.out.println("Third New Line");
 		System.out.println("Fourth New Line");
 		printStatement();
-		System.exit(0);
+		System.out.println("My name is Josue");        
+    System.exit(0);
 		
 		
 	}
