@@ -4,6 +4,7 @@ public class main {
 		// TODO Auto-generated method stub
 		System.out.println("Hello World!");
 		System.out.println("First New Line");
+		System.out.println("Second New Line");
 		
 		System.exit(0);
 	}
