@@ -1,3 +1,8 @@
+package mainPkg;
+
+import testPackage.*;
+
+
 public class main {
 
 	public static void main(String[] args) {
@@ -11,6 +16,9 @@ public class main {
 		System.out.println("My name is Josue");        
 		System.exit(0);
 		System.out.println("Fifth New Line");
+		
+		Printer p = new Printer();
+		p.newPrint();
 		
 		
 	}
