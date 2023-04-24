@@ -16,6 +16,7 @@ public class main {
 		System.out.println("My name is Josue");        
 		System.exit(0);
 		System.out.println("Fifth New Line");
+		System.out.println("Sixth New Line");
 		
 		Printer p = new Printer();
 		p.newPrint();
