@@ -7,7 +7,7 @@ public class User {
 		public GeneralUser() {
 			// TODO Auto-generated constructor stub
 		}
-
+//testing testing
 	}
 
 	public class ITUser extends User{
