@@ -26,6 +26,14 @@ public class Receiver {
 		return userList[index];
 	}
 	
+	public String getCreator() {
+		return createdByUser;
+	}
+	
+	public String getDate() {
+		return created.toString();
+	}
+	
 	public void addMessage(Message newMessage) {
 		//Needs implementation to add to the end of the list. May want to change this to a sorted list
 	}
@@ -38,12 +46,13 @@ public class Receiver {
 		public static int chatCount = 0; //used to generate chatID uniqueness.
 		
 		//Constructor
-		public Chat(String createdBy, String [] userList, Message [] msgList) {
-			// TODO Auto-generated constructor stub
-			this.createdByUser = createdBy;
+		public Chat(String user, String [] userList, Message [] msgList) {
+			this.createdByUser = user;
 			this.userList = userList;
 			this.msgList = msgList;
 			this.created = new Date();
+			chatID = idHelper(chatCount, "Cht-");
+			chatCount++;
 			
 		}
 		
@@ -69,12 +78,58 @@ public class Receiver {
 		private String groupID;			//Uniquely Generated groupID
 		private String groupName;		//Name for the Group. Doesn't have to be unique at the moment. Can implement uniqueness later if needed.
 		public boolean isPrivate;		//Indicates whether the group is designated private or public. If private, should not be accessible by users not on the userList.
+		public boolean deleted;			//Indicates whether the group is deleted. If it is, the object will remain for log purposes, but can't be accessed by General Users.
 		public static int groupCount = 0; 	//used to generate groupID uniqueness.
 		
-		public Group() {
-			// TODO Auto-generated constructor stub
+		//Group Constructor
+		public Group(String user, boolean privacy, String newGroupName) {
+			leadMod = user;
+			createdByUser = user;
+			//addUser to the list. Need to implement.
+			isPrivate = privacy;
+			deleted = false;
+			groupName = newGroupName;
+			created = new Date();
+			groupID = idHelper(groupCount, "Grp-");
+			groupCount++;
 		}
 
+		public String getGroupID() {
+			return groupID;
+		}
+		
+		public String getLeadModerator() {
+			return leadMod;
+		}
+		
+		public String [] getModerators() {
+			return moderators;
+		}
+		
+		public String getGroupname() {
+			return groupName;
+		}
+		
+		public boolean getDeletedStatus() {
+			return deleted;
+		}
+		
+		
+	}
+	
+	//Adds a user to the list
+	
+	//Removes a user from the list
+	
+	//Adds a moderator to the list
+	
+	//Removes a moderator from the list
+	
+	//Generates IDs for groups and chats.
+	private String idHelper(int counter, String receiver ) {
+		String temp = new String();
+		temp = ("00000000" + Integer.toString(counter)).substring(Integer.toString(counter).length()); //Converts counter to a string, and adds leading zeroes.
+		return receiver + temp;
 	}
 
 }
