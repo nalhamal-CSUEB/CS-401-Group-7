@@ -19,7 +19,7 @@ public class main {
 		
 		Printer p = new Printer();
 		p.newPrint();
-		
+		System.out.println("omid");
 		
 	}
 	
