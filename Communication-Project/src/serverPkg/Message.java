@@ -15,6 +15,7 @@ public class Message implements Serializable {
     public Message(String fromAcctNum, String destinationID, String message, MsgType msgType){
         this.fromAcctNum = fromAcctNum;
         this.destinationID = destinationID;
+        this.date = new Date();
         this.msgType = msgType;
         this.message = message;
     }
