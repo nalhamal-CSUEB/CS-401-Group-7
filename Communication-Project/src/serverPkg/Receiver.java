@@ -126,6 +126,10 @@ public class Receiver {
 			return leadMod;
 		}
 		
+		public void changeLeadModerator(String userID) {
+			leadMod = userID;
+		}
+		
 		public ArrayList<String> getModerators() {
 			return moderators;
 		}
@@ -155,6 +159,14 @@ public class Receiver {
 			else {
 				//System.out.println("\nUser " + userID + " is already a member. \n");
 			}
+		}
+		
+		public void sendInvite(String userID) {
+			//Need to implement
+		}
+		
+		public void deleterGroup() {
+			//Need to implement
 		}
 		
 	}
