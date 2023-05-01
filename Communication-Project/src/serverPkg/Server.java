@@ -5,7 +5,7 @@ public class Server {
 
 	public static void main(String[] args) {
 		ServerSocket server = null;
-
+		communicationSystem comSystem = new communicationSystem();
 		try {
 
 			// server is listening on port 1234
@@ -65,8 +65,38 @@ public class Server {
 			public void run()
 			{
 		        try {
-		            Message message = (Message) in.readObject();
-		            if (message.getType().equals("login")) {
+		            Packet packet = (Packet) in.readObject();
+		            switch (packet.getPacketType()) {
+		            case "LOGIN":
+		            	comSystem.login(packet.getLogin());
+		            	break;
+		            case "LOGOUT":
+		            	comSystem.logout((packet.getLogin());
+		            	break;
+		            case "REQUEST":
+		            	switch (packet.getRequestType()) {
+		            	case "SEND_MESSAGE":
+			            	break;
+		            	case "RECEIVE_MESSAGE":
+			            	break;
+		            	case "CREATE_GROUP":
+			            	break;
+		            	case "CREATE_CHAT":
+			            	break;
+		            	case "JOIN_GROUP":
+			            	break;
+		            	case "LEAVE_GROUP":
+			            	break;
+		            	case "KICK_USER":
+			            	break;
+		            	case "REPORT_USER":
+			            	break;
+		            	case "BLOCK_USER":
+			            	break;
+		            	}
+		            	break;
+		            }
+		            if (packet.getPacketType().equals("LOGIN")) {
 		                message.setStatus("success");
 		                out.writeObject(message);
 		                out.flush();

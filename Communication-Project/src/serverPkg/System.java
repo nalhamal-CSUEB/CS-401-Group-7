@@ -1,6 +1,6 @@
 package serverPkg;
 import java.util.ArrayList;
-public class System {
+public class communicationSystem {
 	private ArrayList<GeneralUser> generalUser;
 	private ArrayList<ITUser> itUser;
 	private ArrayList<User> connectedUser;
@@ -9,7 +9,7 @@ public class System {
 	private ArrayList<Group> privateGroups;
 	private ArrayList<Group> deletedGroups;
 	
-	public System() {
+	public communicationSystem() {
 		this.generalUser = new ArrayList<GeneralUser>();
 		this.itUser = new ArrayList<ITUser>();
 		this.connectedUser = new ArrayList<User>();
@@ -20,14 +20,28 @@ public class System {
 	}
 	
 	public bool login(User user) {
-		return true;
+		if(verify(user) == true) {
+			return true;
+		}
+		return false;
 	}
 	
 	public bool verify(User user) {
-		return true;
+		for (int i = 0; i < connectedUser.size(); i++) {
+		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
+		    	  addConnectedUser(user);
+		    	  return true;
+		      }
+		}
+		return false;
 	}
 	
-	public bool logout() {
+	public bool logout(User user) {
+		for (int i = 0; i < connectedUser.size(); i++) {
+		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
+		    	  connectedUser.remove(i);
+		      }
+		}
 		return true;
 	}
 	
@@ -38,7 +52,7 @@ public class System {
 	
 	public void removeConnectedUser(User user) {
 		for (int i = 0; i < connectedUser.size(); i++) {
-		      if (connectedUser.password.equals(user.password)) {
+		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
 		    	  connectedUser.remove(i);
 		      }
 		}
