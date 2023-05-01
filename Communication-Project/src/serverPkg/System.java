@@ -1,5 +1,6 @@
 package serverPkg;
 import java.util.ArrayList;
+
 public class communicationSystem {
 	private ArrayList<GeneralUser> generalUser;
 	private ArrayList<ITUser> itUser;
@@ -27,8 +28,10 @@ public class communicationSystem {
 	}
 	
 	public bool verify(User user) {
+		//so far only works with general users
 		for (int i = 0; i < connectedUser.size(); i++) {
-		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
+		      if (generalUser.getUsername().equals(user.getUsername()) &&
+		    	  generalUser.getPassword().equals(user.getPassword())) {
 		    	  addConnectedUser(user);
 		    	  return true;
 		      }
@@ -90,7 +93,12 @@ public class communicationSystem {
 	
 	//group methods
 	public void addGroup(Group group) {
-		
+		if (group.isPrivate == true) {
+			privateGroups.add(group);
+		}
+		else {
+			publicGroups.add(group);
+		}
 	}
 	
 	public void removeGroup(Group group) {
@@ -126,12 +134,23 @@ public class communicationSystem {
 		return deletedGroups;
 	}
 	
-	public void writeToGroup() {
-		
+	public void writeToGroup(Group group, Message message) {
+		group.addMessage(message);
 	}
 	
-	public Packet readChat() {
-		
+	public Packet readGroup(Group group) {
+		packet = new Packet("REQUEST", "RECEIVE_MESSAGE", group);
+		return packet;
+	}
+	
+	//send invite groups
+	public Packet sendInvite(User user, Group group) {
+		packet = new Packet("REQUEST", "RECIEVE_INVITE", user, group);
+		return packet;		
+	}
+	
+	public void addUserToGroup(User user, Group group) {
+		group.addUser(user);
 	}
 	
 	//chat methods
@@ -139,11 +158,27 @@ public class communicationSystem {
 		chats.add(chat);
 	}
 	
-	public void writeToChat() {
-		
+	public void writeToChat(Chat chat, Message message) {
+		for (i = 0; i < chats.size(); i++) {
+			if (chats[i].getChatID().equals(chat.getChatID())) {
+				chat.addMessage(message);
+			}
+			else { //first message
+				Chat newChat = new Chat(ArrayList<User> userList); // needs work
+				addChat(newChat);
+			}
+		}
 	}
 	
-	public Packet readChat() {
-		
+	public Packet readChat(Chat chat) {
+		packet = new Packet("REQUEST", "RECEIVE_MESSAGE", chat);
+		return packet;
 	}
+	
+	//Add to block list
+	public Packet addBlockList(User user, User blocked) {
+		user.addToBlockList(blocked);
+		packet = new Packet("REQUEST", "BLOCKED", user);
+	}
+	
 }

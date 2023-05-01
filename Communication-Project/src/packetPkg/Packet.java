@@ -5,6 +5,7 @@ public class Packet {
 	protected PacketType type;
 	protected RequestType request;
 	protected Message message;
+	protected String status = "";
 	
 	public Packet(PacketType type, RequestType request, Message message) {
 		this.type = type;
@@ -12,15 +13,23 @@ public class Packet {
 		this.message = message;
 	}
 	
-	PacketType getPacketType() {
+	public PacketType getPacketType() {
 		return type;
 	}
 	
-	RequestType getRequestType() {
+	public RequestType getRequestType() {
 		return request;
 	}
 	
-	Message getMessage() {
+	public Message getMessage() {
 		return message;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
