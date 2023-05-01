@@ -1,16 +1,21 @@
 package serverPkg;
 
-import java.io.Serializable;
 import java.util.Date;
 
 
-public class Message implements Serializable {
+public class Message {
 	protected String fromAcctNum;
     protected String destinationID;
     protected String message;
     protected Date date;
     protected MsgType msgType;
 
+    //Default Constructor
+    public Message() {
+    	this(null, null, null, null);
+    	this.date = null;
+    }
+    
     // constructor
     public Message(String fromAcctNum, String destinationID, String message, MsgType msgType){
         this.fromAcctNum = fromAcctNum;
