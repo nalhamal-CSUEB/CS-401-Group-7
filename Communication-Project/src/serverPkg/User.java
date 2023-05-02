@@ -1,5 +1,7 @@
 package serverPkg;
 
+import java.util.ArrayList;
+
 public class User {
 
 	protected String displayName;
@@ -7,7 +9,7 @@ public class User {
 	protected String acctNum;
 	protected String username;
 	protected String password;
-	protected String[] blockList;
+	protected ArrayList<User> blockList;
 	protected boolean status;
 
     public User(String displayName, String username, String password, UserType userType) {
@@ -18,21 +20,8 @@ public class User {
         this.status = true;
     }
 
-    public Group createGroup(User admin, boolean isPrivate, String groupName) {
-        // implementation to create a new Group object
-    }
-
-    public void writeMessage(Message message, String fromAcctNum, String destinationID) {
-        // implementation to write a new message
-    }
-
-    public void readMessage(Message message) {
-        // implementation to read a message
-    }
-
-    public String addToBlockList(String acctNum) {
-    	 return "";
-        // implementation to add a user to the block list
+    public void addToBlockList(User acctNum) { 
+    	blockList.add(acctNum);
     }
 
     public String getDisplayName() {
@@ -59,7 +48,7 @@ public class User {
         return status;
     }
 
-    public String[] getBlockList() {
+    public ArrayList<User> getBlockList() {
         return blockList;
     }
     
@@ -74,7 +63,7 @@ public class User {
 		    }
 
     	}
-    
+    /* WIP, First finish General user
     public class ITUser extends User {
 
     	  public ITUser(String displayName, String username, String password, UserType userType) {
@@ -102,7 +91,7 @@ public class User {
             // implementation to delete a group
         }
 
-    }
+    }*/
     
 }
 
