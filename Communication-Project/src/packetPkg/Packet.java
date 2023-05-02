@@ -109,6 +109,7 @@ public class Packet implements Serializable{
 		this.setString(newString);		
 	}
 	/*****************Begin	Getters ***************************************/
+
 	public PacketType getPacketType() {
 		return type;
 	}
@@ -117,13 +118,16 @@ public class Packet implements Serializable{
 		return request;
 	}
 	
+
 	public StatusType getStatusType() {
 		return status;
 	}
+
 	public Message getMessage() {
 		return message;
 	}
 	
+
 	public ArrayList<Message> getMsgList(){
 		return msgList;
 	}
@@ -218,7 +222,4 @@ public class Packet implements Serializable{
 		this.string = newString;
 	}
 	/*****************End Setters ***************************************/
-	
-	
-	
 }
