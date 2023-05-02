@@ -38,7 +38,7 @@ public class Client {
 					User currentUser = new User();	//Build new object of type User
 					Packet login = new Packet(PacketType.LOGIN, StatusType.NULL, currentUser);
 					
-					//Login Loop
+			/*********************	Login Loop	********************************/
 					while(login.getStatusType() != StatusType.SUCCESS ) {
 						//GUI - Replace with something that can connect to the GUI
 				        System.out.println("\nPlease enter your username: ");			     
@@ -72,8 +72,14 @@ public class Client {
 				        }
 					}//Exit the Login Loop
 			                	
-						
-						//text type message
+		/***************	Enter the Functional Branch	*************************/
+					//1. Load User Data from Server
+					Packet userData = new Packet(PacketType.REQUEST, StatusType.NULL, )
+					
+					
+					//2. Navigate from Home Screen
+					
+					//3. 
 					Packet message = new Packet(PacketType.text, StatusType.undefined, "");
 					while (true) {
 						System.out.println("\n\nWrite a text message. To exit, write 'logout'");
