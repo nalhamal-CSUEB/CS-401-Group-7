@@ -11,7 +11,7 @@ public class User {
 	protected String password;
 	protected ArrayList<String> groupList;	//Unique groupID should be stored here.
 	protected ArrayList<String> chatList;	//Unique chatID should be stored here.
-	protected ArrayList<User> blockList;	//Unique userID should be stored here.
+	protected ArrayList<String> blockList;	//Unique userID should be stored here.
 	protected boolean status;
 
     public User(String displayName, String username, String password, UserType userType) {
@@ -75,8 +75,8 @@ public class User {
         this.status = newStatus;
     }
 
-    public void setBlockList(ArrayList<User> blockList) {
-      this.blockList = new ArrayList<User>(blockList);
+    public void setBlockList(ArrayList<String> blockList) {
+      this.blockList = new ArrayList<String>(blockList);
     }
     
     public void setGroupList(String newGroup) {
@@ -88,7 +88,7 @@ public class User {
     }
     
     /**********************	Mutators	*********************/
-    public void addToBlockList(User acctNum) { 
+    public void addToBlockList(String acctNum) { 
     	blockList.add(acctNum);
     }
     
