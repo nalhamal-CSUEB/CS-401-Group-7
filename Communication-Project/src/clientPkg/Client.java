@@ -8,9 +8,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-import packetPkg.Packet;
-import packetPkg.PacketType;
-import packetPkg.RequestType;
+import packetPkg.*;
+import serverPkg.*;
 
 public class Client {
 
@@ -35,26 +34,35 @@ public class Client {
 			        // create a ObjectInputStream so we can read data from it.
 			        ObjectInputStream objectInputStream;
 			        
-			        Packet login = new Packet(PacketType.LOGIN, StatusType.undefined, "");
+			        // object of scanner class
+					Scanner sc = new Scanner(System.in);
+					String line = null;
+			        
+			        //Replace with something that can connect to the GUI
+			        System.out.println("\nPlease enter your username: ");			     
+					line = sc.nextLine();	// reading text from user
+					
+					User currentUser = new User();	//Build new object of type User
+					currentUser.Set					//set username in object of type User
+			        				
+			        
+			        
+			        Packet login = new Packet(PacketType.LOGIN, StatusType.NULL, currentUser);
 			        outputStream = socket.getOutputStream();
 			        objectOutputStream = new ObjectOutputStream(outputStream);
 			        objectOutputStream.writeObject(login);
 			        
 			        inputStream = socket.getInputStream();
 			        objectInputStream = new ObjectInputStream(inputStream);
-			        login = (Message) objectInputStream.readObject();
+			        login = (Packet) objectInputStream.readObject();
 			        
 			        System.out.println("\nAttempting login...");
 			        
 			        if(login.getStatus() == StatusType.success) {
 			        	System.out.println("Login successful");		        	
-			        	
-			        	// object of scanner class
-						Scanner sc = new Scanner(System.in);
-						String line = null;
 						
 						//text type message
-						Message message = new Message(MessageType.text, StatusType.undefined, "");
+						Packet message = new Packet(PacketType.text, StatusType.undefined, "");
 						while (true) {
 							System.out.println("\n\nWrite a text message. To exit, write 'logout'");
 							
@@ -66,15 +74,15 @@ public class Client {
 							if(line.equals("logout")) {
 								break;
 							}
-							message.setText(line);
+							Packet.setText(line);
 							objectOutputStream.writeObject(message);
-							message = (Message) objectInputStream.readObject();
+							message = (Packet) objectInputStream.readObject();
 							System.out.println("\nMessage Received from Server: " + message.getText() + "\n");
 						}
 						
-						Message logout = new Message(MessageType.logout, StatusType.undefined, "");
+						Packet logout = new Packet(PacketType.logout, StatusType.undefined, "");
 						objectOutputStream.writeObject(logout);
-						logout = (Message) objectInputStream.readObject();
+						logout = (Packet) objectInputStream.readObject();
 						if(logout.getStatus() == StatusType.success) {
 							System.out.println("\n\nLogged out successfully.");
 						}
