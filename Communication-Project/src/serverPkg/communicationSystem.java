@@ -1,5 +1,5 @@
 package serverPkg;
-
+import packetPkg;
 import java.util.ArrayList;
 
 public class communicationSystem {
@@ -21,23 +21,29 @@ public class communicationSystem {
 		this.deletedGroups = new ArrayList<Group>();
 	}
 	
-	public bool login(User user) {
-		if(verify(user) == true) {
-			return true;
+	public Packet login(User user) {
+		User loadedUser = verify(user);
+		if(loadedUser.getUsername().equals("")) {
+			packet = new Packet("LOGIN", "", loadedUser);
+			packet.setStatus("FAIL");
+			return packet;
 		}
-		return false;
+		packet = new Packet("LOGIN", "", loadedUser);
+    	packet.setStatus("SUCCESS");
+		return packet;
 	}
 	
-	public bool verify(User user) {
+	public User verify(User user) {
 		//so far only works with general users
-		for (int i = 0; i < connectedUser.size(); i++) {
-		      if (generalUser.getUsername().equals(user.getUsername()) &&
-		    	  generalUser.getPassword().equals(user.getPassword())) {
+		for (int i = 0; i < generalUser.size(); i++) {
+		      if (generalUser[i].getUsername().equals(user.getUsername()) &&
+		    	  generalUser[i].getPassword().equals(user.getPassword())) {
 		    	  addConnectedUser(user);
-		    	  return true;
+		    	  return generalUser[i];
 		      }
 		}
-		return false;
+		User failedUser = new User("","","","");
+		return failed User;
 	}
 	
 	public bool logout(User user) {

@@ -1,6 +1,7 @@
 package serverPkg;
 import java.io.*;
 import java.net.*;
+import packetPkg;
 public class Server {
 
 	public static void main(String[] args) {
@@ -68,13 +69,13 @@ public class Server {
 		            Packet packet = (Packet) in.readObject();
 		            switch (packet.getPacketType()) {
 		            case "LOGIN":
-		            	comSystem.login(packet.getLogin());
-		            	packet.setStatus("success");
+		            	packet = comSystem.login(packet.getUser());
+		            	out.writeObject(packet);
+	            		out.flush();
 		            	switch (packet.getPacketType()) {
 		            		while (true) {
 					            case "LOGOUT":
 					            	comSystem.logout(packet.getUser());
-					            	packet.setStatus("success");
 					            	out.writeObject(packet);
 				            		out.flush();
 					            	clientSocket.close();
