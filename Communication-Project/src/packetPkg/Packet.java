@@ -15,9 +15,9 @@ public class Packet implements Serializable{
 	protected Receiver.Group group;
 	protected Receiver.Chat chat;
 	protected ArrayList<Receiver> receiverList;
-	protected User userID;
-	protected User.GeneralUser genUserID;
-	protected User.ITUser ITUserID;
+	protected User user;
+	protected User.GeneralUser genUser;
+	protected User.ITUser ITUser;
 	protected ArrayList<User> userList;
 	protected String string;
 	
@@ -28,57 +28,54 @@ public class Packet implements Serializable{
 				null, null);
 	}	
 	
-	//Login Constructor
-	public Packet(User newUser, String password){
-		this.setPacketType(PacketType.LOGIN);
+	//Login and Logout Constructor
+	public Packet(PacketType packet, RequestType request, User newUser){
+		this.setPacketType(packet);
+		this.setRequestType(request);
 		this.setUser(newUser);
-		this.setString(password);
 	}
 	
-	//Logout Constructor
-	public Packet(User oldUser) {
-		this.setPacketType(PacketType.LOGOUT);
-		this.setUser(oldUser);		
-	}
-	
-	//SEND_MESSAGE Constructor
-	public Packet(PacketType packet, User fromUser, Receiver location, Message newMessage) {
-		this.setRequestType(RequestType.SEND_MESSAGE);
-		this.setReceiver(location);
+	//SEND_MESSAGE_GROUP Constructor
+	public Packet(PacketType packet, RequestType request, User fromUser, Receiver.Group location, Message newMessage) {
+		this.setPacketType(packet);
+		this.setRequestType(request);
+		this.setUser(fromUser);
+		this.setGroup(location);
 		this.setMessage(newMessage);
 	}
 	
-	//RECEIVE_MESSAGE Constructor
-	public Packet(Receiver location) {
-		this.setRequestType(RequestType.RECEIVE_MESSAGE);
-		this.setReceiver(location);
+	//RECEIVE_MESSAGE_GROUP and CREATE_GROUP Constructor 
+	public Packet(PacketType packet, RequestType request, Receiver.Group location) {
+		this.setPacketType(packet);
+		this.setRequestType(request);
+		this.setGroup(location);
 	}
 	
-	//CREATE_GROUP Constructor
-	public Packet(Receiver.Group newGroup) {
-		this.setRequestType(RequestType.CREATE_GROUP);
-		this.setGroup(newGroup);
+	//SEND_MESSAGE_CHAT Constructor
+	public Packet(PacketType packet, RequestType request, User fromUser, Receiver.Chat location, Message newMessage) {
+		this.setPacketType(packet);
+		this.setRequestType(request);
+		this.setUser(fromUser);
+		this.setChat(location);
+		this.setMessage(newMessage);
 	}
 	
-	//CREATE_CHAT Constructor
-	public Packet(Receiver.Chat newChat) {
-		this.setRequestType(RequestType.CREATE_CHAT);
-		this.setChat(newChat);
+	//RECEIVE_MESSAGE_CHAT and CREATE_CHAT Constructor
+	public Packet(PacketType packet, RequestType request, Receiver.Chat location) {
+		this.setPacketType(packet);
+		this.setRequestType(request);
+		this.setChat(location);
 	}
-	
-	//JOIN_GROUP Constructor
-	public Packet(Receiver.Group newGroup, User newUser) {
-		this.setRequestType(RequestType.JOIN_GROUP);
+
+	//JOIN_GROUP and LEAVE_GROUP Constructor
+	public Packet(PacketType packet, RequestType request,Receiver.Group newGroup, User newUser) {
+		this.setPacketType(packet);
+		this.setRequestType(request);
 		this.setGroup(newGroup);
 		this.setUser(newUser);
 	}
 	
-	//LEAVE_GROUP Constructor
-	public Packet(Receiver.Group newGroup, User newUser) {
-		this.setRequestType(RequestType.JOIN_GROUP);
-		this.setGroup(newGroup);
-		this.setUser(newUser);
-	}
+	//RECEIVE_INVITE_LIST Constructor
 	
 	//KICK_USER Constructor
 	
@@ -132,13 +129,13 @@ public class Packet implements Serializable{
 	}
 	
 	public User getUser(){
-		return userID;
+		return user;
 	}
 	public User getGenUser(){
-		return genUserID;
+		return genUser;
 	}
 	public User getITUser(){
-		return ITUserID;
+		return ITUser;
 	}
 
 	public ArrayList<User> getUserList(){
@@ -186,15 +183,15 @@ public class Packet implements Serializable{
 	}
 	
 	public void setUser(User newUser){
-		this.userID = newUser;
+		this.user = newUser;
 	}
 	
 	public void setITUser(User.ITUser newUser){
-		this.ITUserID = newUser;
+		this.ITUser = newUser;
 	}
 
 	public void setUserList(User.GeneralUser newUser){
-		this.genUserID = newUser;
+		this.genUser = newUser;
 	}
 	
 	public void setString(String newString){
