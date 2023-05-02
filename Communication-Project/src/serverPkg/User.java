@@ -9,7 +9,9 @@ public class User {
 	protected String acctNum;
 	protected String username;
 	protected String password;
-	protected ArrayList<User> blockList;
+	protected ArrayList<String> groupList;	//Unique groupID should be stored here.
+	protected ArrayList<String> chatList;	//Unique chatID should be stored here.
+	protected ArrayList<User> blockList;	//Unique userID should be stored here.
 	protected boolean status;
 
     public User(String displayName, String username, String password, UserType userType) {
@@ -18,10 +20,6 @@ public class User {
         this.password = password;
         this.userType = userType;
         this.status = true;
-    }
-
-    public void addToBlockList(User acctNum) { 
-    	blockList.add(acctNum);
     }
 
     public String getDisplayName() {
@@ -79,6 +77,39 @@ public class User {
 
     public void setBlockList(ArrayList<User> blockList) {
       this.blockList = new ArrayList<User>(blockList);
+    }
+    
+    public void setGroupList(String newGroup) {
+    	this.groupList= new ArrayList<String>(newGroup);
+    }
+    
+    public void setChatList(String newChat) {
+    	this.chatList= new ArrayList<String>(newChat);
+    }
+    
+    /**********************	Mutators	*********************/
+    public void addToBlockList(User acctNum) { 
+    	blockList.add(acctNum);
+    }
+    
+    public void addToGroupList(String newGroup) {
+    	groupList.add(newGroup);
+    }
+    
+    public void addToChatList(String newChat) {
+    	chatList.add(newChat);
+    }
+    
+    public void removeFromBlockList(User acctNum) { 
+    	blockList.remove(acctNum);
+    }
+    
+    public void removeFromGroupList(String newGroup) {
+    	groupList.remove(newGroup);
+    }
+    
+    public void removeFromChatList(String newChat) {
+    	chatList.remove(newChat);
     }
     
     public class GeneralUser extends User {
