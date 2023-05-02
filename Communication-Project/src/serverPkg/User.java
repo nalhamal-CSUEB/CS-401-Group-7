@@ -52,15 +52,44 @@ public class User {
         return blockList;
     }
     
+    /****************	Setters	***********************/
+    public void setDisplayName(String newName) {
+        this.displayName = newName;
+    }
+
+    public void setAcctNum(String newAcct) {
+        this.acctNum = newAcct;
+    }
+
+    public void setUsername(String newUsername) {
+        this.username = newUsername;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public void setUserType(UserType type) {
+        this.userType = type;   
+       }
+
+    public void setStatus(boolean newStatus) {
+        this.status = newStatus;
+    }
+
+    public void setBlockList(ArrayList<User> blockList) {
+      this.blockList = new ArrayList<User>(blockList);
+    }
+    
     public class GeneralUser extends User {
     	  
     	  public GeneralUser(String displayName, String username, String password, UserType userType) {
     		  super(displayName,username, password, userType);    
     		  this.status = true;
     	    }
-		 public void reportIT(String acctNum) {
+		/* public void reportIT(String acctNum) {
 		        // implementation to report an issue to the IT department
-		    }
+		    }*/
 
     	}
     /* WIP, First finish General user
