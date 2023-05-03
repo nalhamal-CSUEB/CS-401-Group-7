@@ -75,14 +75,15 @@ public class Client {
 					}//Exit the Login Loop
 			                	
 		/***************	Enter the Functional Branch	*************************/
-				//1. Load User Data from Server
+					Packet logout = new Packet(PacketType.LOGOUT, RequestType.NULL, currentUser);
+					//1. Load User Data from Server
 					//Create the local client objects used for the session. Will get periodically updated by the server.
 					currentUser = new User(login.getUser());
 					Packet packetData = new Packet();
 					ArrayList<serverPkg.Receiver.Group> clientGroups = new ArrayList<serverPkg.Receiver.Group>();
 					ArrayList<serverPkg.Receiver.Chat> clientChats = new ArrayList<serverPkg.Receiver.Chat>();
 					ArrayList<serverPkg.Receiver.Group> inviteGroups = new ArrayList<serverPkg.Receiver.Group>();
-					
+					//ArrayList<serverPkg.Receiver.Group> publicGroups = new ArrayList<serverPkg.Receiver.Group>();
 					
 					//For Loop Request for Data from Server. Start by getting size of lists.
 					ArrayList<String> inviteList = new ArrayList<String>(currentUser.getInviteList());
@@ -93,82 +94,125 @@ public class Client {
 					
 					ArrayList<String> chatList = new ArrayList<String>(currentUser.getChatList());
 					int sizeChatList = chatList.size();
-					
-					//Loop to get InviteList
-					for(int i = 0; i < sizeInviteList; i++) {
-						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, inviteList.get(i));
-						outputStream = socket.getOutputStream();
-				        objectOutputStream = new ObjectOutputStream(outputStream);
-				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
-				        
-				        inputStream = socket.getInputStream();
-				        objectInputStream = new ObjectInputStream(inputStream);
-				        packetData = (Packet) objectInputStream.readObject();
-				        inviteGroups.add(packetData.getGroup());
-					}	
-					
-					//Loop to get Groups List
-					for(int i = 0; i < sizeGroupList; i++) {
-						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, groupList.get(i));
-						outputStream = socket.getOutputStream();
-				        objectOutputStream = new ObjectOutputStream(outputStream);
-				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
-				        
-				        inputStream = socket.getInputStream();
-				        objectInputStream = new ObjectInputStream(inputStream);
-				        packetData = (Packet) objectInputStream.readObject();
-				        clientGroups.add(packetData.getGroup());
-					}	
-					
-					//Loop to get Chats List
-					for(int i = 0; i < sizeChatList; i++) {
-						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, chatList.get(i));
-						outputStream = socket.getOutputStream();
-				        objectOutputStream = new ObjectOutputStream(outputStream);
-				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
-				        
-				        inputStream = socket.getInputStream();
-				        objectInputStream = new ObjectInputStream(inputStream);
-				        packetData = (Packet) objectInputStream.readObject();
-				        clientChats.add(packetData.getChat());
-					}	
-					
-					//We should now have all our data from the Server to begin.				
-					
-					//2. Navigate from Home Screen
-					
-					//3. 
-					//Packet message = new Packet(PacketType.text, StatusType.undefined, "");
-					while (true) {
-						System.out.println("\n\nWrite a text message. To exit, write 'logout'");
+					while(logout.getStatusType() != StatusType.SUCCESS) {					
 						
-						// reading text from user
-						line = sc.nextLine();
-
-						// sending the user input to server
-						line = line.toLowerCase();
-						if(line.equals("logout")) {
+						//Loop to get InviteList
+						for(int i = 0; i < sizeInviteList; i++) {
+							packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, inviteList.get(i));
+							outputStream = socket.getOutputStream();
+					        objectOutputStream = new ObjectOutputStream(outputStream);
+					        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
+					        
+					        inputStream = socket.getInputStream();
+					        objectInputStream = new ObjectInputStream(inputStream);
+					        packetData = (Packet) objectInputStream.readObject();
+					        inviteGroups.add(packetData.getGroup());
+						}	
+						
+						//Loop to get Groups List
+						for(int i = 0; i < sizeGroupList; i++) {
+							packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, groupList.get(i));
+							outputStream = socket.getOutputStream();
+					        objectOutputStream = new ObjectOutputStream(outputStream);
+					        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
+					        
+					        inputStream = socket.getInputStream();
+					        objectInputStream = new ObjectInputStream(inputStream);
+					        packetData = (Packet) objectInputStream.readObject();
+					        clientGroups.add(packetData.getGroup());
+						}	
+						
+						//Loop to get Chats List
+						for(int i = 0; i < sizeChatList; i++) {
+							packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, chatList.get(i));
+							outputStream = socket.getOutputStream();
+					        objectOutputStream = new ObjectOutputStream(outputStream);
+					        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
+					        
+					        inputStream = socket.getInputStream();
+					        objectInputStream = new ObjectInputStream(inputStream);
+					        packetData = (Packet) objectInputStream.readObject();
+					        clientChats.add(packetData.getChat());
+						}	
+						
+						//We should now have all our data from the Server to begin.				
+						
+						//2. Navigate from Home Screen
+						Menu menu = Menu.HOME;
+						MenuChat chat = MenuChat.CHATS;
+						MenuGroup group = MenuGroup.GROUPS;
+						MenuInvitation invite = null;
+						
+						switch(menu){
+						case HOME:
+							break;
+						case CHATS:
+							switch(chat) {
+							case NEW_CHAT:
+								break;
+							case SELECT_CHAT:
+								switch(chat) {
+								case READ_CHAT:
+									break;
+								case WRITE_CHAT:
+									break;
+								case BLOCK:
+									break;
+								case REPORT:
+									break;
+								case CHATS:
+									break;
+								case HOME:
+									break;									
+								}
+								break;
+							case HOME:
+							}
+							break;
+						case GROUPS:
+							switch(group) {
+							case SELECT_GROUP:
+								switch(group) {
+								case JOIN_GROUP:
+								case LEAVE_GROUP:
+								case WRITE:
+								case GROUPS:
+								case HOME:
+									break;
+								}
+							case NEW_GROUP:
+							case PUBLIC_GROUPS:
+							case MY_GROUPS:
+							case HOME:
+								break;
+								
+							}
+							break;
+						case INVITE:
+							switch(invite) {
+							
+							}
+							break;
+						case LOGOUT:
+							break;
+						
+						}
+						
+						//3. 
+						//Packet message = new Packet(PacketType.text, StatusType.undefined, "");
+						
+						//End. Logout
+						objectOutputStream = new ObjectOutputStream(outputStream);
+						objectOutputStream.writeObject(logout);
+						
+						objectInputStream = new ObjectInputStream(inputStream);
+						logout = (Packet) objectInputStream.readObject();
+						if(logout.getStatusType() == StatusType.SUCCESS) {
+							System.out.println("\n\nLogged out successfully.");	//GUI - 
 							break;
 						}
-						/*Packet.setText(line);
-						objectOutputStream.writeObject(message);
-						message = (Packet) objectInputStream.readObject();
-						System.out.println("\nMessage Received from Server: " + message.getText() + "\n");*/
 					}
-					
-					Packet logout = new Packet(PacketType.LOGOUT, RequestType.NULL, currentUser);
-					objectOutputStream = new ObjectOutputStream(outputStream);
-					objectOutputStream.writeObject(logout);
-					
-					objectInputStream = new ObjectInputStream(inputStream);
-					logout = (Packet) objectInputStream.readObject();
-					if(logout.getStatusType() == StatusType.SUCCESS) {
-						System.out.println("\n\nLogged out successfully.");
-					}
-					else {
-						System.out.println("\n\nThere was an error. You will be logged out");
-					}
-					
+
 					// closing the scanner object
 					sc.close();
 					
@@ -176,7 +220,7 @@ public class Client {
 					socket.close();
 					
 					//Exit out of application
-					System.exit(0);
+					System.exit(0);				
 	        }			
 			catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();

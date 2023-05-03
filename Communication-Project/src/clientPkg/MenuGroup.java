@@ -5,8 +5,8 @@ public enum MenuGroup {
 	NEW_GROUP,
 	PUBLIC_GROUPS,
 	MY_GROUPS,
-	JOIN_GROUP,
-	LEAVE_GROUP,
+	JOIN_GROUP,		//If public group
+	LEAVE_GROUP,	//If already a member
 	WRITE,
 	ADD_MOD,		//Only Lead Mod
 	REM_MOD,		//Only Lead Mod
