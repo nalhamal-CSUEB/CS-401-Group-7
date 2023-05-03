@@ -143,58 +143,65 @@ public class Client {
 						MenuGroup group = MenuGroup.GROUPS;
 						MenuInvitation invite = null;
 						
-						switch(menu){
-						case HOME:
-							break;
-						case CHATS:
-							switch(chat) {
-							case NEW_CHAT:
+						//Menu Loop
+						while(menu != Menu.LOGOUT) {
+							switch(menu){
+							case HOME:
+								while(menu == Menu.HOME) {
+									
+								}
 								break;
-							case SELECT_CHAT:
+							case CHATS:
 								switch(chat) {
-								case READ_CHAT:
+								case NEW_CHAT:
 									break;
-								case WRITE_CHAT:
-									break;
-								case BLOCK:
-									break;
-								case REPORT:
-									break;
-								case CHATS:
+								case SELECT_CHAT:
+									switch(chat) {
+									case READ_CHAT:
+										break;
+									case WRITE_CHAT:
+										break;
+									case BLOCK:
+										break;
+									case REPORT:
+										break;
+									case CHATS:
+										break;
+									case HOME:
+										break;									
+									}
 									break;
 								case HOME:
-									break;									
 								}
 								break;
-							case HOME:
-							}
-							break;
-						case GROUPS:
-							switch(group) {
-							case SELECT_GROUP:
+							case GROUPS:
 								switch(group) {
-								case JOIN_GROUP:
-								case LEAVE_GROUP:
-								case WRITE:
-								case GROUPS:
+								case SELECT_GROUP:
+									switch(group) {
+									case JOIN_GROUP:
+									case LEAVE_GROUP:
+									case WRITE:
+									case GROUPS:
+									case HOME:
+										break;
+									}
+								case NEW_GROUP:
+								case PUBLIC_GROUPS:
+								case MY_GROUPS:
 								case HOME:
 									break;
+									
 								}
-							case NEW_GROUP:
-							case PUBLIC_GROUPS:
-							case MY_GROUPS:
-							case HOME:
 								break;
+							case INVITE:
+								switch(invite) {
 								
-							}
-							break;
-						case INVITE:
-							switch(invite) {
+								}
+								break;
+							case LOGOUT:
+								break;
 							
-							}
-							break;
-						case LOGOUT:
-							break;
+						}
 						
 						}
 						
