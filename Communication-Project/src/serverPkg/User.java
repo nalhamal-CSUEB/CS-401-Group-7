@@ -23,19 +23,18 @@ public class User {
         this.status = true;
     }
     
-    //Overload constructor
+    //Copy constructor
     public User(User newUser) {
-    	this.displayName = newUser.displayName;
-        this.username = newUser.username;
-        this.password = newUser.password;
-        this.userType = newUser.userType;
-        this.status = newUser.status;
-        this.acctNum = newUser.acctNum;
-        this.userType = newUser.userType;
-        this.groupList = newUser.groupList;
-        this.chatList = newUser.chatList;
-        this.blockList = newUser.blockList;
-        this.inviteList = newUser.inviteList;
+    	this.displayName = newUser.getdisplayName();
+        this.username = newUser.getUsername();
+        this.password = newUser.getPassword();
+        this.userType = newUser.getUserType();
+        this.status = newUser.getStatus();
+        this.acctNum = newUser.getAcctNum();
+        this.groupList = newUser.getGroupList();
+        this.chatList = newUser.getChatList();
+        this.blockList = newUser.getBlockList();
+        this.inviteList = newUser.getInviteList();
     }
 
     public String getDisplayName() {
