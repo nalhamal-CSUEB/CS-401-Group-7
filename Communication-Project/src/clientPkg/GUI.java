@@ -1,9 +1,6 @@
 package clientPkg;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 import javax.swing.*;
 
@@ -11,6 +8,8 @@ public class GUI implements ActionListener {
 	JButton newchatButton;
 	JPanel chatpanel;
 	JFrame chatframe;		
+
+
 
 	public GUI() {
 		JFrame frame;
@@ -89,14 +88,8 @@ public class GUI implements ActionListener {
 	}
 
 	private void doChats() {
-		Client client = new Client();
-		Socket s = client.socket;
-		ObjectInputStream din = new ObjectInputStream(s.getInputStream());
-		ObjectOutputStream dout = new ObjectOutputStream(s.getOutputStream());
-		//client.socket.getOutputStream();
-	
-			
-		
+		// User chatUser = new User();
+
 		chatframe = new JFrame("Chats");
 		chatpanel = new JPanel();
 		chatframe.setSize(500, 500);		// size of frame
@@ -142,15 +135,6 @@ public class GUI implements ActionListener {
 						// send and display messages
 						String fieldText = text.getText();
 						textArea.setText(fieldText);
-						String msgin = "";
-						try {
-							while(!msgin.equals("logout")) {
-								msgin = (String)din.readObject();
-								textArea.setText(textArea.getText().trim() + "\n Server: " + msgin);
-							}
-						}catch(Exception e) {
-							
-						}
 					}
 				}
 				);
