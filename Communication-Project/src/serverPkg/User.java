@@ -15,6 +15,10 @@ public class User {
 	protected ArrayList<String> inviteList;	//Unique groupID invited to Join
 	protected boolean status;
 
+	public User() {
+		this(null,null,null,null);
+	}
+	
     public User(String displayName, String username, String password, UserType userType) {
         this.displayName = displayName;
         this.username = username;
@@ -65,11 +69,11 @@ public class User {
         return blockList;
     }
     
-    public ArrayList<String> getGroupeList() {
+    public ArrayList<String> getGroupList() {
         return groupList;
     }
     
-    public ArrayList<String> chatList() {
+    public ArrayList<String> getChatList() {
         return chatList;
     }
     
