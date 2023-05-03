@@ -60,63 +60,30 @@ public class GUI implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == newchatButton) {
-			// create new chat
-			JFrame newchatFrame;
-			JPanel newchatPanel;
-			
-			newchatFrame = new JFrame("Chat");
-			newchatPanel = new JPanel();
-			newchatFrame.setSize(500, 500);		// size of frame
-			newchatFrame.setLocation(300, 300);	// location on the screen
-			newchatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			newchatFrame.setVisible(true);		// display the frame with components
-			newchatFrame.add(newchatPanel);
-			
-			newchatPanel.setLayout(null);
+		String[] commands = { "Chats", "Groups", "Invites", "Exit" };
 
-			JTextField text = new JTextField();
-			text.setBounds(5, 400, 300, 40);
-			text.setVisible(true);
-			newchatPanel.add(text);
-			
-			JTextArea textArea = new JTextArea();
-			textArea.setBounds(10, 10, 420, 350);
-			textArea.setVisible(true);
-			newchatPanel.add(textArea);
-			
+		int choice;
 
-			JButton send = new JButton("Send");
-			send.setBounds(310, 400, 150, 40);
-			newchatPanel.add(send);
-
-		}
+		choice = JOptionPane.showOptionDialog(null, "Select a command", "Home",
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, commands,
+				commands[commands.length - 1]);		// last variable is what is selected so thats 
+													// why i can use int choice, prints list in reverse order
 		
-		else {
-			String[] commands = { "Chats", "Groups", "Invites", "Exit" };
-	
-			int choice;
-	
-			choice = JOptionPane.showOptionDialog(null, "Select a command", "Home",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, commands,
-					commands[commands.length - 1]);		// last variable is what is selected so thats 
-														// why i can use int choice, prints list in reverse order
+		switch (choice) {
+			case 0:
+				doChats();
+				break;
+			case 1:
+				doGroups();
+				break;
+			case 2:
+				doInvites();
+				break;
+			case 3:
+				doExit();
+				break;
+			default: // do nothing
 			
-			switch (choice) {
-				case 0:
-					doChats();
-					break;
-				case 1:
-					doGroups();
-					break;
-				case 2:
-					doInvites();
-					break;
-				case 3:
-					doExit();
-					break;
-				default: // do nothing
-			}
 		}
 	}
 
@@ -137,7 +104,48 @@ public class GUI implements ActionListener {
 		
 		// create new chat
 		newchatButton = new JButton("New Chat");
-		newchatButton.addActionListener(this);
+		newchatButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent event) {
+				JFrame newchatFrame;
+				JPanel newchatPanel;
+				
+				newchatFrame = new JFrame("Chat");
+				newchatPanel = new JPanel();
+				newchatFrame.setSize(500, 500);		// size of frame
+				newchatFrame.setLocation(300, 300);	// location on the screen
+				newchatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				newchatFrame.setVisible(true);		// display the frame with components
+				newchatFrame.add(newchatPanel);
+				
+				newchatPanel.setLayout(null);
+
+				JTextField text = new JTextField();
+				text.setBounds(5, 400, 300, 40);
+				text.setVisible(true);
+				newchatPanel.add(text);
+				
+				JTextArea textArea = new JTextArea();
+				textArea.setBounds(10, 10, 420, 350);
+				textArea.setVisible(true);
+				newchatPanel.add(textArea);
+				
+				JButton send = new JButton("Send");
+				send.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae) {
+						// send and display messages
+						String fieldText = text.getText();
+						textArea.setText(fieldText);
+					}
+				}
+				);
+				send.setBounds(310, 400, 150, 40);
+				newchatPanel.add(send);
+
+			
+			}
+		}
+		);
+		
 		newchatButton.setBounds(10, 20, 80, 50);
 		chatpanel.add(newchatButton);
 		
@@ -147,7 +155,7 @@ public class GUI implements ActionListener {
 		exitButton.setBounds(400, 20, 80, 50);
 		chatpanel.add(exitButton);
 		
-		//showlist of open chats
+		//show list of open chats
 		
 		
 	}
