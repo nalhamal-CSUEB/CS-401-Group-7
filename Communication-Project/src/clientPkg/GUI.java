@@ -1,12 +1,15 @@
 package clientPkg;
-import serverPkg.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class GUI implements ActionListener {
-	
+	JButton newchatButton;
+	JPanel chatpanel;
+	JFrame chatframe;		
+
+
 
 	public GUI() {
 		JFrame frame;
@@ -57,59 +60,92 @@ public class GUI implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String[] commands = { "Chats", "Groups", "Invites", "Exit" };
+		if (e.getSource() == newchatButton) {
+			// create new chat
+			JFrame newchatFrame;
+			JPanel newchatPanel;
+			
+			newchatFrame = new JFrame("Chat");
+			newchatPanel = new JPanel();
+			newchatFrame.setSize(500, 500);		// size of frame
+			newchatFrame.setLocation(300, 300);	// location on the screen
+			newchatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			newchatFrame.setVisible(true);		// display the frame with components
+			newchatFrame.add(newchatPanel);
+			
+			newchatPanel.setLayout(null);
 
-		int choice;
+			JTextField text = new JTextField();
+			text.setBounds(5, 400, 300, 40);
+			text.setVisible(true);
+			newchatPanel.add(text);
+			
+			JTextArea textArea = new JTextArea();
+			textArea.setBounds(10, 10, 420, 350);
+			textArea.setVisible(true);
+			newchatPanel.add(textArea);
+			
 
-		choice = JOptionPane.showOptionDialog(null, "Select a command", "Home",
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, commands,
-				commands[commands.length - 1]);		// last variable is what is selected so thats 
-													// why i can use int choice, prints list in reverse order
+			JButton send = new JButton("Send");
+			send.setBounds(310, 400, 150, 40);
+			newchatPanel.add(send);
+
+		}
 		
-		switch (choice) {
-			case 0:
-				doChats();
-				break;
-			case 1:
-				doGroups();
-				break;
-			case 2:
-				doInvites();
-				break;
-			case 3:
-				doExit();
-				break;
-			default: // do nothing
+		else {
+			String[] commands = { "Chats", "Groups", "Invites", "Exit" };
+	
+			int choice;
+	
+			choice = JOptionPane.showOptionDialog(null, "Select a command", "Home",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, commands,
+					commands[commands.length - 1]);		// last variable is what is selected so thats 
+														// why i can use int choice, prints list in reverse order
+			
+			switch (choice) {
+				case 0:
+					doChats();
+					break;
+				case 1:
+					doGroups();
+					break;
+				case 2:
+					doInvites();
+					break;
+				case 3:
+					doExit();
+					break;
+				default: // do nothing
+			}
 		}
 	}
+
 	private void doChats() {
 		// User chatUser = new User();
 
-		JFrame frame;
-		JPanel panel;
+		chatframe = new JFrame("Chats");
+		chatpanel = new JPanel();
+		chatframe.setSize(500, 500);		// size of frame
+		chatframe.setLocation(500, 500);	// location on the screen
+		chatframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		chatframe.setVisible(true);		// display the frame with components
+		chatframe.add(chatpanel);
 		
-		frame = new JFrame("Chats");
-		panel = new JPanel();
-		frame.setSize(500, 500);		// size of frame
-		frame.setLocation(500, 300);	// location on the screen
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);		// display the frame with components
-		frame.add(panel);
 		
-		panel.setLayout(null);
+		chatpanel.setLayout(null);
 
 		
 		// create new chat
-		JButton newchatButton = new JButton("New Chat");
+		newchatButton = new JButton("New Chat");
 		newchatButton.addActionListener(this);
 		newchatButton.setBounds(10, 20, 80, 50);
-		panel.add(newchatButton);
+		chatpanel.add(newchatButton);
 		
 		// exit
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(this);
 		exitButton.setBounds(400, 20, 80, 50);
-		panel.add(exitButton);
+		chatpanel.add(exitButton);
 		
 		//showlist of open chats
 		
