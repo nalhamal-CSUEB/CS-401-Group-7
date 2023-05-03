@@ -191,8 +191,8 @@ public class GUI implements ActionListener {
 				
 				selectedgroupPanel.setLayout(null);
 	
-				joinButton.setBounds(10, 20, 80, 50);
-				selectedgroupPanel.add(joinButton);
+				//joinButton.setBounds(10, 20, 80, 50);
+				//selectedgroupPanel.add(joinButton);
 				
 				leaveButton = new JButton("Public Group");
 				leaveButton.setBounds(100, 20, 100, 50);
