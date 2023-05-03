@@ -25,14 +25,14 @@ public class User {
     
     //Copy constructor
     public User(User newUser) {
-    	this.displayName = newUser.getdisplayName();
+    	this.displayName = newUser.displayName;
         this.username = newUser.getUsername();
         this.password = newUser.getPassword();
         this.userType = newUser.getUserType();
         this.status = newUser.getStatus();
         this.acctNum = newUser.getAcctNum();
-        this.groupList = newUser.getGroupList();
-        this.chatList = newUser.getChatList();
+        this.groupList = newUser.groupList;
+        this.chatList = newUser.chatList;
         this.blockList = newUser.getBlockList();
         this.inviteList = newUser.getInviteList();
     }
@@ -61,7 +61,7 @@ public class User {
         return status;
     }
 
-    public ArrayList<User> getBlockList() {
+    public ArrayList<String> getBlockList() {
         return blockList;
     }
     
@@ -106,12 +106,12 @@ public class User {
       this.blockList = new ArrayList<String>(blockList);
     }
     
-    public void setGroupList(String newGroup) {
-    	this.groupList= new ArrayList<String>(newGroup);
+    public void setGroupList(ArrayList<String> newGroup) {
+    	this.groupList= newGroup;
     }
     
-    public void setChatList(String newChat) {
-    	this.chatList= new ArrayList<String>(newChat);
+    public void setChatList(ArrayList<String> newChat) {
+    	this.chatList= newChat;
     }
     
     /**********************	Mutators	*********************/
@@ -127,19 +127,19 @@ public class User {
     	chatList.add(newChat);
     }
     
-    public void addToInviteList(String newInvitet) {
+    public void addToInviteList(String newInvite) {
     	inviteList.add(newInvite);
     }    
     
-    public void removeFromBlockList(User acctNum) { 
+    public void removeFromBlockList(String acctNum) { 
     	blockList.remove(acctNum);
     }
     
-    public void removeFromGroupList(String newGroup) {
+    public void removeFromGroupList(String trgtGroup) {
     	groupList.remove(trgtGroup);
     }
     
-    public void removeFromChatList(String newChat) {
+    public void removeFromChatList(String trgtChat) {
     	chatList.remove(trgtChat);
     }
     
