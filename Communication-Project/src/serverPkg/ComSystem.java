@@ -2,7 +2,7 @@ package serverPkg;
 import packetPkg.*;
 import java.util.ArrayList;
 
-public class communicationSystem {
+public class ComSystem {
 	private ArrayList<User.GeneralUser> generalUser;
 	//private ArrayList<ITUser> itUser;
 	private ArrayList<User> connectedUser;
@@ -11,7 +11,7 @@ public class communicationSystem {
 	private ArrayList<Receiver.Group> privateGroups;
 	private ArrayList<Receiver.Group> deletedGroups;
 	
-	public communicationSystem() {
+	public ComSystem() {
 		this.generalUser = new ArrayList<User.GeneralUser>();
 		//this.itUser = new ArrayList<ITUser>();
 		this.connectedUser = new ArrayList<User>();
