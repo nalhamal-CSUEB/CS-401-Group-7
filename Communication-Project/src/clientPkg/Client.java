@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+import javax.sound.midi.Receiver;
+
 import packetPkg.*;
 import serverPkg.*;
 
@@ -73,8 +75,64 @@ public class Client {
 					}//Exit the Login Loop
 			                	
 		/***************	Enter the Functional Branch	*************************/
-					//1. Load User Data from Server
-					Packet userData = new Packet(PacketType.REQUEST, StatusType.NULL, )
+				//1. Load User Data from Server
+					//Create the local client objects
+					currentUser = new User(login.getUser());
+					Packet packetData = new Packet();
+					ArrayList<Receiver.Groups> clientGroups = new ArrayList<Receiver.Groups>();
+					ArrayList<Receiver.Chats> clientChats = new ArrayList<Receiver.Chats>();
+					ArryaList<Receiver.Groups> inviteGroups = new ArrayList<Receiver.Groups>();
+					
+					
+					//For Loop Request for Data from Server. Start by getting size of lists.
+					String[] inviteList = new currentUser.getInviteList();
+					int sizeInviteList = inviteList.size();
+					
+					String[] groupList = new currentUser.getGroupList();
+					int sizeGroupList = groupList.size();
+					
+					String [] chatList = new currentUser.getChatList();
+					int sizeChatList = chatList.size();
+					
+					//Loop to get InviteList
+					for(int i = 0; i < sizeInviteList; i++) {
+						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, inviteList[i]);
+						outputStream = socket.getOutputStream();
+				        objectOutputStream = new ObjectOutputStream(outputStream);
+				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
+				        
+				        inputStream = socket.getInputStream();
+				        objectInputStream = new ObjectInputStream(inputStream);
+				        packetData = (Packet) objectInputStream.readObject();
+				        inviteGroups.add(packetData.getGroup());
+					}	
+					
+					//Loop to get Groups List
+					for(int i = 0; i < sizeGroupList; i++) {
+						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, groupList[i]);
+						outputStream = socket.getOutputStream();
+				        objectOutputStream = new ObjectOutputStream(outputStream);
+				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
+				        
+				        inputStream = socket.getInputStream();
+				        objectInputStream = new ObjectInputStream(inputStream);
+				        packetData = (Packet) objectInputStream.readObject();
+				        clientGroups.add(packetData.getGroup());
+					}	
+					
+					//Loop to get Chats List
+					for(int i = 0; i < sizeChatList; i++) {
+						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, chatList[i]);
+						outputStream = socket.getOutputStream();
+				        objectOutputStream = new ObjectOutputStream(outputStream);
+				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
+				        
+				        inputStream = socket.getInputStream();
+				        objectInputStream = new ObjectInputStream(inputStream);
+				        packetData = (Packet) objectInputStream.readObject();
+				        clientChats.add(packetData.getGroup());
+					}	
+					
 					
 					
 					//2. Navigate from Home Screen
