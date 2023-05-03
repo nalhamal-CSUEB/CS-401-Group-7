@@ -115,7 +115,7 @@ public class ComSystem {
 			for (int i = 0; i < privateGroups.size(); i++) {
 			      if (privateGroups.getGroupID().equals(group.getGroupID())) {
 			    	  deletedGroups.add(privateGroups[i]);
-			    	  privateGroups.remvoe(i);
+			    	  privateGroups.remove(i);
 			      }
 			}
 		}
@@ -165,9 +165,12 @@ public class ComSystem {
 		chats.add(chat);
 	}
 	
+	/*
+	 * I'm not sure what this method does. Receiver.Chat is a single object, that contains an ArrayList of Message objects. Nabil
+	 */
 	public void writeToChat(Receiver.Chat chat, Message message) {
-		for (i = 0; i < chats.size(); i++) {
-			if (chats[i].getChatID().equals(chat.getChatID())) {
+		for (int i = 0; i < chats.size(); i++) {
+			if (chat[i].getChatID().equals(chat.getChatID())) {
 				chat.addMessage(message);
 			}
 			else { //first message
@@ -184,8 +187,9 @@ public class ComSystem {
 	
 	//Add to block list
 	public Packet addBlockList(User user, User blocked) {
-		user.addToBlockList(blocked);
-		packet = new Packet("REQUEST", "BLOCKED", user);
+		user.addToBlockList(blocked.getAcctNum());
+		Packet packet = new Packet(PacketType.REQUEST, RequestType.BLOCK_USER, user);
+		return packet;
 	}
 	
 }

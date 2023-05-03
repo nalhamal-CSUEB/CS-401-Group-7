@@ -70,7 +70,7 @@ public class Server {
 		            Packet packet = (Packet) in.readObject();
 		            switch (packet.getPacketType()) {
 		            case LOGIN:
-		            	packet = comSystem.login(packet.getUser());
+		            	packet = ComSystem.login(User.GeneralUser.getGenUser());
 		            	out.writeObject(packet);
 	            		out.flush();
 		            	switch (packet.getPacketType()) {
