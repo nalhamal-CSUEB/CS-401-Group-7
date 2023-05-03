@@ -202,7 +202,7 @@ public class Packet implements Serializable{
 	}
 	
 	public void setMsgList(ArrayList<Message> newList){
-		this.msgList = new ArrayList<Message>(newList);
+		this.msgList = newList;
 	}
 	
 	public void setReceiver(Receiver newLocation){
@@ -218,15 +218,15 @@ public class Packet implements Serializable{
 	}
 	
 	public void setReceiverList(ArrayList<Receiver> newList){
-		this.receiverList = new ArrayList<Receiver>(newList);
+		this.receiverList =newList;
 	}
 	
 	public void setGroupList(ArrayList<Receiver.Group> newList){
-		this.groupList = new ArrayList<Receiver.Group>(newList);
+		this.groupList = newList;
 	}
 	
 	public void setChatList(ArrayList<Receiver.Chat> newList){
-		this.chatList = new ArrayList<Receiver.Chat>(newList);
+		this.chatList = newList;
 	}
 	
 	public void setUser(User newUser){

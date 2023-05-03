@@ -1,8 +1,9 @@
 package serverPkg;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable{
 
 	protected String displayName;
 	protected UserType userType;
@@ -25,6 +26,10 @@ public class User {
         this.password = password;
         this.userType = userType;
         this.status = true;
+        this.groupList = new ArrayList<String>();
+        this.chatList = new ArrayList<String>();
+        this.blockList = new ArrayList<String>();
+        this.inviteList = new ArrayList<String>();
     }
     
     //Copy constructor
