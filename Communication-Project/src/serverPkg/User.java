@@ -12,6 +12,7 @@ public class User {
 	protected ArrayList<String> groupList;	//Unique groupID should be stored here.
 	protected ArrayList<String> chatList;	//Unique chatID should be stored here.
 	protected ArrayList<String> blockList;	//Unique userID should be stored here.
+	protected ArrayList<String> inviteList;	//Unique groupID invited to Join
 	protected boolean status;
 
     public User(String displayName, String username, String password, UserType userType) {
@@ -48,6 +49,18 @@ public class User {
 
     public ArrayList<User> getBlockList() {
         return blockList;
+    }
+    
+    public ArrayList<String> getGroupeList() {
+        return groupList;
+    }
+    
+    public ArrayList<String> chatList() {
+        return chatList;
+    }
+    
+    public ArrayList<String> getInviteList() {
+        return inviteList;
     }
     
     /****************	Setters	***********************/
@@ -100,16 +113,24 @@ public class User {
     	chatList.add(newChat);
     }
     
+    public void addToInviteList(String newInvitet) {
+    	inviteList.add(newInvite);
+    }    
+    
     public void removeFromBlockList(User acctNum) { 
     	blockList.remove(acctNum);
     }
     
     public void removeFromGroupList(String newGroup) {
-    	groupList.remove(newGroup);
+    	groupList.remove(trgtGroup);
     }
     
     public void removeFromChatList(String newChat) {
-    	chatList.remove(newChat);
+    	chatList.remove(trgtChat);
+    }
+    
+    public void removeFromInviteList(String trgtInvite) {
+    	inviteList.remove(trgtInvite);
     }
     
     public class GeneralUser extends User {
