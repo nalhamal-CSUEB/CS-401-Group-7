@@ -132,16 +132,13 @@ public class GUI implements ActionListener {
 				JButton send = new JButton("Send");
 				send.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
-						// send and display messages
+						// send and display messages on frame
 						String fieldText = text.getText();
 						textArea.setText(fieldText);
 					}
-				}
-				);
+				});
 				send.setBounds(310, 400, 150, 40);
 				newchatPanel.add(send);
-
-			
 			}
 		}
 		);
