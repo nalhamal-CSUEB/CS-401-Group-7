@@ -43,10 +43,10 @@ public class communicationSystem {
 		      }
 		}
 		User failedUser = new User("","","","");
-		return failed User;
+		return failedUser;
 	}
 	
-	public bool logout(User user) {
+	public boolean logout(User user) {
 		for (int i = 0; i < connectedUser.size(); i++) {
 		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
 		    	  connectedUser.remove(i);
@@ -86,17 +86,17 @@ public class communicationSystem {
 	}
 	
 	//it user methods
-	public void addITUser(User user) {
+	/*public void addITUser(User user) {
 		itUser.add(user);
-	}
+	}*/
 	
 	public void removeITUser(User user) {
 		//no delete account
 	}
-	
+	/*
 	public ArrayList<User> getITUsers() {
 		return itUser;
-	}
+	}*/
 	
 	//group methods
 	public void addGroup(Receiver.Group group) {
@@ -110,7 +110,7 @@ public class communicationSystem {
 	
 	public void removeGroup(Receiver.Group group) {
 		//checks for private or public then copies group to deleted groups while
-		//removing from visable groups
+		//removing from visible groups
 		if (group.isPrivate == true) {
 			for (int i = 0; i < privateGroups.size(); i++) {
 			      if (privateGroups.getGroupID().equals(group.getGroupID())) {
@@ -146,17 +146,17 @@ public class communicationSystem {
 	}
 	
 	public Packet readGroup(Receiver.Group group) {
-		packet = new Packet("REQUEST", "RECEIVE_MESSAGE", group);
+		Packet packet = new Packet(PacketType.REQUEST, RequestType.RECEIVE_MESSAGE_GROUP, group);
 		return packet;
 	}
 	
 	//send invite groups
 	public Packet sendInvite(User user, Receiver.Group group) {
-		packet = new Packet("REQUEST", "RECIEVE_INVITE", user, group);
+		Packet packet = new Packet(PacketType.REQUEST, RequestType.RECEIVE_INVITE, user, group);
 		return packet;		
 	}
 	
-	public void addUserToGroup(User user, Receiver.Group group) {
+	public void addUserToGroup(String user, Receiver.Group group) {
 		group.addUser(user);
 	}
 	
@@ -178,7 +178,7 @@ public class communicationSystem {
 	}
 	
 	public Packet readChat(Receiver.Chat chat) {
-		packet = new Packet("REQUEST", "RECEIVE_MESSAGE", chat);
+		Packet packet = new Packet(PacketType.REQUEST, RequestType.RECEIVE_MESSAGE_CHAT, chat);
 		return packet;
 	}
 	
