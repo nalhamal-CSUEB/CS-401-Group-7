@@ -162,14 +162,14 @@ public class User {
 		    }*/
 
     	}
-    /* WIP, First finish General user
+  
     public class ITUser extends User {
 
     	  public ITUser(String displayName, String username, String password, UserType userType) {
     		  super(displayName,username, password, userType);    
     		  this.status = true;
     	    }
-    	
+    	/*
     	public void kick(User user) {
             // implementation to remove user from chat or group
         }
@@ -188,9 +188,9 @@ public class User {
         
         public void deleteGroup(Group group) {
             // implementation to delete a group
-        }
+        }*/
 
-    }*/
+    }
     
 }
 
