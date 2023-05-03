@@ -160,11 +160,14 @@ public class Server {
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
+					            	default:
+					            		break;
 					            	}
 					            	break;
 		            		}
 		            	
-		            	break;
+		            	default:
+		            		break;
 		            }
 
 		        }
