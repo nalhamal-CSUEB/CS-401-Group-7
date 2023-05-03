@@ -36,19 +36,19 @@ public class ComSystem {
 	public User verify(User user) {
 		//so far only works with general users
 		for (int i = 0; i < generalUser.size(); i++) {
-		      if (generalUser[i].getUsername().equals(user.getUsername()) &&
-		    	  generalUser[i].getPassword().equals(user.getPassword())) {
+		      if (generalUser.get(i).getUsername().equals(user.getUsername()) &&
+		    	  generalUser.get(i).getPassword().equals(user.getPassword())) {
 		    	  addConnectedUser(user);
-		    	  return generalUser[i];
+		    	  return generalUser.get(i);
 		      }
 		}
-		User failedUser = new User("","","","");
+		User failedUser = new User();
 		return failedUser;
 	}
 	
 	public boolean logout(User user) {
 		for (int i = 0; i < connectedUser.size(); i++) {
-		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
+		      if (connectedUser.get(i).getAcctNum().equals(user.getAcctNum())) {
 		    	  connectedUser.remove(i);
 		      }
 		}
@@ -62,7 +62,7 @@ public class ComSystem {
 	
 	public void removeConnectedUser(User user) {
 		for (int i = 0; i < connectedUser.size(); i++) {
-		      if (connectedUser.getAcctNum().equals(user.getAcctNum())) {
+		      if (connectedUser.get(i).getAcctNum().equals(user.getAcctNum())) {
 		    	  connectedUser.remove(i);
 		      }
 		}
@@ -113,20 +113,28 @@ public class ComSystem {
 		//removing from visible groups
 		if (group.isPrivate == true) {
 			for (int i = 0; i < privateGroups.size(); i++) {
-			      if (privateGroups.getGroupID().equals(group.getGroupID())) {
-			    	  deletedGroups.add(privateGroups[i]);
+			      if (privateGroups.get(i).getGroupID().equals(group.getGroupID())) {
+			    	  deletedGroups.add(privateGroups.get(i));
 			    	  privateGroups.remove(i);
 			      }
 			}
 		}
 		else {
 			for (int i = 0; i < publicGroups.size(); i++) {
-			      if (publicGroups.getGroupID().equals(group.getGroupID())) {
-			    	  deletedGroups.add(publicGroups[i]);
+			      if (publicGroups.get(i).getGroupID().equals(group.getGroupID())) {
+			    	  deletedGroups.add(publicGroups.get(i));
 			    	  publicGroups.remove(i);
 			      }
 			}
 		}
+	}
+	
+	public void removeUserFromGroup(String user) {
+		//
+	}
+	
+	public void addUserToGroup(User user) {
+		//
 	}
 	
 	public ArrayList<Receiver.Group> getPublicGroups() {
@@ -170,7 +178,7 @@ public class ComSystem {
 	 */
 	public void writeToChat(Receiver.Chat chat, Message message) {
 		for (int i = 0; i < chats.size(); i++) {
-			if (chat[i].getChatID().equals(chat.getChatID())) {
+			if (chat.getChatID().equals(chat.getChatID())) {
 				chat.addMessage(message);
 			}
 			else { //first message

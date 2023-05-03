@@ -28,7 +28,7 @@ public class Server {
 										.getHostAddress());
 
 				// create a new thread object
-				ClientHandler clientSock = new ClientHandler(client);
+				ClientHandler clientSock = new ClientHandler(client, comSystem);
 
 				// This thread will handle the client
 				// separately
@@ -53,14 +53,16 @@ public class Server {
 		// ClientHandler class
 		private static class ClientHandler implements Runnable {
 			private final Socket clientSocket;
-		   // private ObjectOutputStream out;
-		   // private ObjectInputStream in;
+			private ComSystem comSystem;
+		    private ObjectOutputStream out;
+		    private ObjectInputStream in;
 			// Constructor
-			public ClientHandler(Socket socket) throws IOException
+			public ClientHandler(Socket socket, ComSystem comSystem) throws IOException
 			{
 				this.clientSocket = socket;
-		        //out = new ObjectOutputStream(clientSocket.getOutputStream());
-		        //in = new ObjectInputStream(clientSocket.getInputStream());
+				this.comSystem = comSystem;
+		        out = new ObjectOutputStream(clientSocket.getOutputStream());
+		        in = new ObjectInputStream(clientSocket.getInputStream());
 			}
 
 			public void run(){
@@ -70,7 +72,7 @@ public class Server {
 		            Packet packet = (Packet) in.readObject();
 		            switch (packet.getPacketType()) {
 		            case LOGIN:
-		            	packet = ComSystem.login(User.GeneralUser.getGenUser());
+		            	packet = comSystem.login(packet.getUser());
 		            	out.writeObject(packet);
 	            		out.flush();
 		            	switch (packet.getPacketType()) {
@@ -90,7 +92,7 @@ public class Server {
 					            		out.flush();
 						            	break;
 					            	case RECEIVE_MESSAGE_GROUP:
-					            		packet = comSystem.readGroup();
+					            		packet = comSystem.readGroup(packet.getGroup());
 					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
@@ -102,7 +104,7 @@ public class Server {
 					            		out.flush();
 						            	break;
 					            	case RECEIVE_MESSAGE_CHAT:
-					            		packet = comSystem.readChat();
+					            		packet = comSystem.readChat(packet.getChat());
 					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
@@ -126,13 +128,13 @@ public class Server {
 					            		out.flush();
 						            	break;
 					            	case LEAVE_GROUP:
-					            		comSystem.removeUserFromGroup(packet.getUser());
+					            		comSystem.removeUserFromGroup(packet.getString());
 					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
 					            	case KICK_USER:
-					            		comSystem.removeUserFromGroup(packet.getUser());
+					            		comSystem.removeUserFromGroup(packet.getString());
 					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
