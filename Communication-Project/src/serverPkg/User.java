@@ -22,6 +22,21 @@ public class User {
         this.userType = userType;
         this.status = true;
     }
+    
+    //Overload constructor
+    public User(User newUser) {
+    	this.displayName = newUser.displayName;
+        this.username = newUser.username;
+        this.password = newUser.password;
+        this.userType = newUser.userType;
+        this.status = newUser.status;
+        this.acctNum = newUser.acctNum;
+        this.userType = newUser.userType;
+        this.groupList = newUser.groupList;
+        this.chatList = newUser.chatList;
+        this.blockList = newUser.blockList;
+        this.inviteList = newUser.inviteList;
+    }
 
     public String getDisplayName() {
         return displayName;
