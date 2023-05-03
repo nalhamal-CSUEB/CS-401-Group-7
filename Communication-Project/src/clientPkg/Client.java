@@ -1,8 +1,8 @@
 package clientPkg;
 
 import java.io.*;
-import java.net.Socket;
-import java.util.Scanner;
+import java.net.*;
+import java.util.*;
 
 import javax.sound.midi.Receiver;
 
@@ -38,7 +38,7 @@ public class Client {
 					
 					//Login process start
 					User currentUser = new User();	//Build new object of type User
-					Packet login = new Packet(PacketType.LOGIN, StatusType.NULL, currentUser);
+					Packet login = new Packet(PacketType.LOGIN, RequestType.NULL, currentUser);
 					
 			/*********************	Login Loop	********************************/
 					while(login.getStatusType() != StatusType.SUCCESS ) {
@@ -46,7 +46,7 @@ public class Client {
 				        System.out.println("\nPlease enter your username: ");			     
 						line = sc.nextLine();	// reading text from user						
 						
-						currentUser.setUserName(line);	//set username in object of type User
+						currentUser.setUsername(line);	//set username in object of type User
 						
 						//GUI - Replace with something that can connect to the GUI
 				        System.out.println("\nPlease enter your password: ");			     
@@ -76,27 +76,27 @@ public class Client {
 			                	
 		/***************	Enter the Functional Branch	*************************/
 				//1. Load User Data from Server
-					//Create the local client objects
+					//Create the local client objects used for the session. Will get periodically updated by the server.
 					currentUser = new User(login.getUser());
 					Packet packetData = new Packet();
-					ArrayList<Receiver.Groups> clientGroups = new ArrayList<Receiver.Groups>();
-					ArrayList<Receiver.Chats> clientChats = new ArrayList<Receiver.Chats>();
-					ArryaList<Receiver.Groups> inviteGroups = new ArrayList<Receiver.Groups>();
+					ArrayList<serverPkg.Receiver.Group> clientGroups = new ArrayList<serverPkg.Receiver.Group>();
+					ArrayList<serverPkg.Receiver.Chat> clientChats = new ArrayList<serverPkg.Receiver.Chat>();
+					ArrayList<serverPkg.Receiver.Group> inviteGroups = new ArrayList<serverPkg.Receiver.Group>();
 					
 					
 					//For Loop Request for Data from Server. Start by getting size of lists.
-					String[] inviteList = new currentUser.getInviteList();
+					ArrayList<String> inviteList = new ArrayList<String>(currentUser.getInviteList());
 					int sizeInviteList = inviteList.size();
 					
-					String[] groupList = new currentUser.getGroupList();
+					ArrayList<String> groupList = new ArrayList<String>(currentUser.getGroupList());
 					int sizeGroupList = groupList.size();
 					
-					String [] chatList = new currentUser.getChatList();
+					ArrayList<String> chatList = new ArrayList<String>(currentUser.getChatList());
 					int sizeChatList = chatList.size();
 					
 					//Loop to get InviteList
 					for(int i = 0; i < sizeInviteList; i++) {
-						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, inviteList[i]);
+						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, inviteList.get(i));
 						outputStream = socket.getOutputStream();
 				        objectOutputStream = new ObjectOutputStream(outputStream);
 				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
@@ -109,7 +109,7 @@ public class Client {
 					
 					//Loop to get Groups List
 					for(int i = 0; i < sizeGroupList; i++) {
-						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, groupList[i]);
+						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, groupList.get(i));
 						outputStream = socket.getOutputStream();
 				        objectOutputStream = new ObjectOutputStream(outputStream);
 				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
@@ -122,7 +122,7 @@ public class Client {
 					
 					//Loop to get Chats List
 					for(int i = 0; i < sizeChatList; i++) {
-						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, chatList[i]);
+						packetData = new Packet(PacketType.REQUEST, RequestType.INVITE_LIST, currentUser, chatList.get(i));
 						outputStream = socket.getOutputStream();
 				        objectOutputStream = new ObjectOutputStream(outputStream);
 				        objectOutputStream.writeObject(packetData);	//Send packet to server, with inviteList[i] as the string argument.
@@ -130,7 +130,7 @@ public class Client {
 				        inputStream = socket.getInputStream();
 				        objectInputStream = new ObjectInputStream(inputStream);
 				        packetData = (Packet) objectInputStream.readObject();
-				        clientChats.add(packetData.getGroup());
+				        clientChats.add(packetData.getChat());
 					}	
 					
 					
@@ -174,8 +174,7 @@ public class Client {
 					
 					//Exit out of application
 					System.exit(0);
-		        }
-			}
+	        }			
 			catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -183,8 +182,5 @@ public class Client {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-}
-		
-		public 
-
+	}
 }
