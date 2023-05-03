@@ -18,7 +18,7 @@ public class Packet implements Serializable{
 	protected ArrayList<Receiver> receiverList;
 	protected User user;
 	protected User.GeneralUser genUser;
-	protected User.ITUser ITUser;
+	//protected User.ITUser ITUser;
 	protected ArrayList<User> userList;
 	protected String string;
 	
@@ -162,10 +162,11 @@ public class Packet implements Serializable{
 	public User getGenUser(){
 		return genUser;
 	}
+	/*
 	public User getITUser(){
 		return ITUser;
 	}
-
+	*/
 	public ArrayList<User> getUserList(){
 		return userList;
 	}
@@ -217,11 +218,11 @@ public class Packet implements Serializable{
 	public void setGenUser(User.GeneralUser newUser){
 		this.genUser = newUser;
 	}
-	
+	/*
 	public void setITUser(User.ITUser newUser){
 		this.ITUser = newUser;
 	}
-
+	*/
 	public void setUserList(ArrayList<User> newUser){
 		this.userList = newUser;
 	}
