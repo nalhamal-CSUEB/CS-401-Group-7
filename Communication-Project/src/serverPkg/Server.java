@@ -1,12 +1,12 @@
 package serverPkg;
 import java.io.*;
 import java.net.*;
-import packetPkg;
+import packetPkg.*;
 public class Server {
 
 	public static void main(String[] args) {
 		ServerSocket server = null;
-		communicationSystem comSystem = new communicationSystem();
+		ComSystem comSystem = new ComSystem();
 		try {
 
 			// server is listening on port 1234
@@ -28,8 +28,7 @@ public class Server {
 										.getHostAddress());
 
 				// create a new thread object
-				ClientHandler clientSock
-					= new ClientHandler(client);
+				ClientHandler clientSock = new ClientHandler(client);
 
 				// This thread will handle the client
 				// separately
@@ -49,123 +48,125 @@ public class Server {
 				}
 			}
 		}
+	}
 		
 		// ClientHandler class
 		private static class ClientHandler implements Runnable {
 			private final Socket clientSocket;
-		    private ObjectOutputStream out;
-		    private ObjectInputStream in;
+		   // private ObjectOutputStream out;
+		   // private ObjectInputStream in;
 			// Constructor
 			public ClientHandler(Socket socket) throws IOException
 			{
 				this.clientSocket = socket;
-		        out = new ObjectOutputStream(clientSocket.getOutputStream());
-		        in = new ObjectInputStream(clientSocket.getInputStream());
+		        //out = new ObjectOutputStream(clientSocket.getOutputStream());
+		        //in = new ObjectInputStream(clientSocket.getInputStream());
 			}
 
-			public void run()
-			{
+			public void run(){
+				ObjectOutputStream out;
+				ObjectInputStream in;
 		        try {
 		            Packet packet = (Packet) in.readObject();
 		            switch (packet.getPacketType()) {
-		            case "LOGIN":
+		            case LOGIN:
 		            	packet = comSystem.login(packet.getUser());
 		            	out.writeObject(packet);
 	            		out.flush();
 		            	switch (packet.getPacketType()) {
 		            		while (true) {
-					            case "LOGOUT":
+					            case LOGOUT:
 					            	comSystem.logout(packet.getUser());
 					            	out.writeObject(packet);
 				            		out.flush();
 					            	clientSocket.close();
 					            	break;
-					            case "REQUEST":
+					            case REQUEST:
 					            	switch (packet.getRequestType()) {
-					            	case "SEND_MESSAGE_GROUP":
+					            	case SEND_MESSAGE_GROUP:
 					            		comSystem.writeToGroup(packet.getGroup(), packet.getMessage());
 					            		packet.setStatus("success");
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "RECEIVE_MESSAGE_GROUP":
+					            	case RECEIVE_MESSAGE_GROUP:
 					            		packet = comSystem.readGroup();
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "SEND_MESSAGE_CHAT":
+					            	case SEND_MESSAGE_CHAT:
 					            		comSystem.writeToChat(packet.getChat(), packet.getMessage());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "RECEIVE_MESSAGE_CHAT":
+					            	case RECEIVE_MESSAGE_CHAT:
 					            		packet = comSystem.readChat();
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "CREATE_GROUP":
+					            	case CREATE_GROUP:
 					            		comSystem.addGroup(packet.getGroup())
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "CREATE_CHAT":
+					            	case CREATE_CHAT:
 					            		comSystem.addChat(packet.getChat());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "JOIN_GROUP":
+					            	case JOIN_GROUP:
 					            		comSystem.addUserToGroup(packet.getUser());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "LEAVE_GROUP":
+					            	case LEAVE_GROUP:
 					            		comSystem.removeUserFromGroup(packet.getUser());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "KICK_USER":
+					            	case KICK_USER:
 					            		comSystem.removeUserFromGroup(packet.getUser());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "SEND_INVITE":
+					            	case SEND_INVITE:
 					            		packet = comSystem.sendInvite(packet.getUser(), packet.getGroup());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "RECIEVE_INVITE_CONFORMATION":
+					            	case RECEIVE_INVITE:
 					            		comSystem.addUserToGroup(packet.getUser(), packet.getGroup());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "REPORT_USER":
+					            	case REPORT_USER:
 					            		//ITuser is made?
 						            	break;
-					            	case "BLOCK_USER":
+					            	case BLOCK_USER:
 					            		packet = comSystem.addBlockList(packet.getUser(), packet.getBlocked());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
 					            	}
 					            	break;
 		            		}
-		            	}
+		            	
 		            	break;
 		            }
 
-		         }
-		         } catch (IOException | ClassNotFoundException e) {
+		        }
+				catch (IOException | ClassNotFoundException e) {
 		        	e.printStackTrace();
 		        }
 		}
