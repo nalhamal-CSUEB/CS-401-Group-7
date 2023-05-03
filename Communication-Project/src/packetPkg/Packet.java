@@ -45,6 +45,14 @@ public class Packet implements Serializable{
 		this.setMessage(newMessage);
 	}
 	
+	//Request BLOCK_LIST, INVITE_LIST, GROUP_LIST, CHAT_LIST Constructor
+		public Packet(PacketType packet, RequestType request, User newUser, String list){
+			this.setPacketType(packet);
+			this.setRequestType(request);
+			this.setUser(newUser);
+			this.setString(list);
+		}
+	
 	//RECEIVE_MESSAGE_GROUP and CREATE_GROUP Constructor 
 	public Packet(PacketType packet, RequestType request, Receiver.Group trgtGroup) {
 		this.setPacketType(packet);
