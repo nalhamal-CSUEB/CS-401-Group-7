@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class GUI implements ActionListener {
-	JButton newchatButton;
-	JPanel chatpanel;
-	JFrame chatframe;		
-
+	JPanel chatPanel;
+	JPanel groupPanel;
+	JFrame chatFrame;
+	JFrame groupFrame;
 
 
 	public GUI() {
@@ -46,6 +46,11 @@ public class GUI implements ActionListener {
 		panel.add(passwordText);
 		
 		JButton cancelButton = new JButton("Cancel");
+//		cancelButton.addActionListener(new ActionListener() { 
+//			public void actionPerformed(ActionEvent event) {
+//				System.exit(0);
+//			}
+//		});
 		cancelButton.setBounds(10, 80, 80, 25);
 		panel.add(cancelButton);
 		
@@ -88,21 +93,20 @@ public class GUI implements ActionListener {
 	}
 
 	private void doChats() {
-		// User chatUser = new User();
-
-		chatframe = new JFrame("Chats");
-		chatpanel = new JPanel();
-		chatframe.setSize(500, 500);		// size of frame
-		chatframe.setLocation(500, 500);	// location on the screen
-		chatframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		chatframe.setVisible(true);		// display the frame with components
-		chatframe.add(chatpanel);
+		chatFrame = new JFrame("Chats");
+		chatPanel = new JPanel();
+		chatFrame.setSize(500, 500);		// size of frame
+		chatFrame.setLocation(500, 500);	// location on the screen
+		chatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		chatFrame.setVisible(true);		// display the frame with components
+		chatFrame.add(chatPanel);
 		
 		
-		chatpanel.setLayout(null);
+		chatPanel.setLayout(null);
 
 		
 		// create new chat
+		JButton newchatButton;
 		newchatButton = new JButton("New Chat");
 		newchatButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent event) {
@@ -144,25 +148,81 @@ public class GUI implements ActionListener {
 		);
 		
 		newchatButton.setBounds(10, 20, 80, 50);
-		chatpanel.add(newchatButton);
+		chatPanel.add(newchatButton);
 		
 		// exit
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(this);
 		exitButton.setBounds(400, 20, 80, 50);
-		chatpanel.add(exitButton);
+		chatPanel.add(exitButton);
 		
 		//show list of open chats
 		
 		
 	}
 	private void doGroups() {
-		JFrame frame;
-		frame = new JFrame("Groups");
-		frame.setSize(500, 500);		// size of frame
-		frame.setLocation(500, 300);	// location on the screen
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-		frame.setVisible(true);		// display the frame with components
+		groupFrame = new JFrame("Groups");
+		groupPanel = new JPanel();
+		groupFrame.setSize(500, 500);		// size of frame
+		groupFrame.setLocation(500, 300);	// location on the screen
+		groupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		groupFrame.setVisible(true);		// display the frame with components
+		groupFrame.add(groupPanel);
+		
+		groupPanel.setLayout(null);
+
+		JButton newgroupButton, publicgroupButton, mygroupsButton, homeButton;
+		newgroupButton = new JButton("New Group");
+		newgroupButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFrame selectedgroupFrame;
+				JPanel selectedgroupPanel;
+				JButton joinButton, leaveButton, writeButton, groupButton;
+				
+				selectedgroupFrame = new JFrame("Selected Group");
+				selectedgroupPanel = new JPanel();
+				selectedgroupFrame.setSize(500, 500);		// size of frame
+				selectedgroupFrame.setLocation(300, 300);	// location on the screen
+				selectedgroupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				selectedgroupFrame.setVisible(true);		// display the frame with components
+				selectedgroupFrame.add(selectedgroupPanel);
+				
+				selectedgroupPanel.setLayout(null);
+	
+				joinButton.setBounds(10, 20, 80, 50);
+				selectedgroupPanel.add(joinButton);
+				
+				leaveButton = new JButton("Public Group");
+				leaveButton.setBounds(100, 20, 100, 50);
+				selectedgroupPanel.add(leaveButton);
+				
+				writeButton = new JButton("My Groups");
+				writeButton.setBounds(210, 20, 80, 50);
+				selectedgroupPanel.add(writeButton);
+				
+				groupButton = new JButton("Home");
+				groupButton.setBounds(400, 20, 80, 50);
+				selectedgroupPanel.add(groupButton);
+			}
+		});
+		newgroupButton.setBounds(10, 20, 80, 50);
+		groupPanel.add(newgroupButton);
+		
+		publicgroupButton = new JButton("Public Group");
+		publicgroupButton.setBounds(100, 20, 100, 50);
+		groupPanel.add(publicgroupButton);
+		
+		mygroupsButton = new JButton("My Groups");
+		mygroupsButton.setBounds(210, 20, 80, 50);
+		groupPanel.add(mygroupsButton);
+		
+		homeButton = new JButton("Home");
+		homeButton.setBounds(400, 20, 80, 50);
+		groupPanel.add(homeButton);
+
+		
 	}
 	private void doInvites() {
 		JFrame frame;
@@ -173,6 +233,7 @@ public class GUI implements ActionListener {
 		frame.setVisible(true);		// display the frame with components
 	}
 	private void doExit() {
+		
 	}
 	public static void main(String[] args) {
 		new GUI();
