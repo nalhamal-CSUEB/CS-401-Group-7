@@ -85,7 +85,7 @@ public class Server {
 					            	switch (packet.getRequestType()) {
 					            	case SEND_MESSAGE_GROUP:
 					            		comSystem.writeToGroup(packet.getGroup(), packet.getMessage());
-					            		packet.setStatus("success");
+					            		packet.setStatusType(StatusType.SUCCESS);
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
