@@ -1,6 +1,7 @@
 package serverPkg;
 import java.io.*;
 import java.net.*;
+import packetPkg;
 public class Server {
 
 	public static void main(String[] args) {
@@ -68,30 +69,38 @@ public class Server {
 		            Packet packet = (Packet) in.readObject();
 		            switch (packet.getPacketType()) {
 		            case "LOGIN":
-		            	comSystem.login(packet.getLogin());
-		            	packet.setStatus("success");
+		            	packet = comSystem.login(packet.getUser());
+		            	out.writeObject(packet);
+	            		out.flush();
 		            	switch (packet.getPacketType()) {
 		            		while (true) {
 					            case "LOGOUT":
 					            	comSystem.logout(packet.getUser());
-					            	packet.setStatus("success");
 					            	out.writeObject(packet);
 				            		out.flush();
 					            	clientSocket.close();
 					            	break;
 					            case "REQUEST":
 					            	switch (packet.getRequestType()) {
-					            	case "SEND_MESSAGE":
+					            	case "SEND_MESSAGE_GROUP":
 					            		comSystem.writeToGroup(packet.getGroup(), packet.getMessage());
-					            		//make a second enum for chats
+					            		packet.setStatus("success");
+					            		out.writeObject(packet);
+					            		out.flush();
+						            	break;
+					            	case "RECEIVE_MESSAGE_GROUP":
+					            		packet = comSystem.readGroup();
+					            		packet.setStatus("success");
+					            		out.writeObject(packet);
+					            		out.flush();
+						            	break;
+					            	case "SEND_MESSAGE_CHAT":
 					            		comSystem.writeToChat(packet.getChat(), packet.getMessage());
 					            		packet.setStatus("success");
 					            		out.writeObject(packet);
 					            		out.flush();
 						            	break;
-					            	case "RECEIVE_MESSAGE":
-					            		packet = comSystem.readGroup();
-					            		//make a second enum for chats
+					            	case "RECEIVE_MESSAGE_CHAT":
 					            		packet = comSystem.readChat();
 					            		packet.setStatus("success");
 					            		out.writeObject(packet);
