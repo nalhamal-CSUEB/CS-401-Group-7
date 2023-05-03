@@ -133,12 +133,12 @@ public class Client {
 				        clientChats.add(packetData.getChat());
 					}	
 					
-					
+					//We should now have all our data from the Server to begin.				
 					
 					//2. Navigate from Home Screen
 					
 					//3. 
-					Packet message = new Packet(PacketType.text, StatusType.undefined, "");
+					//Packet message = new Packet(PacketType.text, StatusType.undefined, "");
 					while (true) {
 						System.out.println("\n\nWrite a text message. To exit, write 'logout'");
 						
@@ -150,16 +150,19 @@ public class Client {
 						if(line.equals("logout")) {
 							break;
 						}
-						Packet.setText(line);
+						/*Packet.setText(line);
 						objectOutputStream.writeObject(message);
 						message = (Packet) objectInputStream.readObject();
-						System.out.println("\nMessage Received from Server: " + message.getText() + "\n");
+						System.out.println("\nMessage Received from Server: " + message.getText() + "\n");*/
 					}
 					
-					Packet logout = new Packet(PacketType.logout, StatusType.undefined, "");
+					Packet logout = new Packet(PacketType.LOGOUT, RequestType.NULL, currentUser);
+					objectOutputStream = new ObjectOutputStream(outputStream);
 					objectOutputStream.writeObject(logout);
+					
+					objectInputStream = new ObjectInputStream(inputStream);
 					logout = (Packet) objectInputStream.readObject();
-					if(logout.getStatus() == StatusType.success) {
+					if(logout.getStatusType() == StatusType.SUCCESS) {
 						System.out.println("\n\nLogged out successfully.");
 					}
 					else {
