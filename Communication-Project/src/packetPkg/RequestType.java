@@ -6,6 +6,8 @@ public enum RequestType {
 	GROUP_LIST,				//Send a List of Groups
 	CHAT_LIST,				//Send a List of Chats
 	INVITE_LIST,			//Send a List of Group Invitations
+	RECEIVE_INVITE,
+	SEND_INVITE,
 	SEND_MESSAGE_GROUP,    //Send Message Request
 	RECEIVE_MESSAGE_GROUP, //Receive Message Request
 	SEND_MESSAGE_CHAT,    //Send Message Request
