@@ -1,35 +1,35 @@
 package serverPkg;
-import packetPkg;
+import packetPkg.*;
 import java.util.ArrayList;
 
 public class communicationSystem {
-	private ArrayList<GeneralUser> generalUser;
-	private ArrayList<ITUser> itUser;
+	private ArrayList<User.GeneralUser> generalUser;
+	//private ArrayList<ITUser> itUser;
 	private ArrayList<User> connectedUser;
-	private ArrayList<Chat> chats;
-	private ArrayList<Group> publicGroups;
-	private ArrayList<Group> privateGroups;
-	private ArrayList<Group> deletedGroups;
+	private ArrayList<Receiver.Chat> chats;
+	private ArrayList<Receiver.Group> publicGroups;
+	private ArrayList<Receiver.Group> privateGroups;
+	private ArrayList<Receiver.Group> deletedGroups;
 	
 	public communicationSystem() {
-		this.generalUser = new ArrayList<GeneralUser>();
-		this.itUser = new ArrayList<ITUser>();
+		this.generalUser = new ArrayList<User.GeneralUser>();
+		//this.itUser = new ArrayList<ITUser>();
 		this.connectedUser = new ArrayList<User>();
-		this.chats = new ArrayList<Chat>();
-		this.publicGroups = new ArrayList<Group>();
-		this.privateGroups = new ArrayList<Group>();
-		this.deletedGroups = new ArrayList<Group>();
+		this.chats = new ArrayList<Receiver.Chat>();
+		this.publicGroups = new ArrayList<Receiver.Group>();
+		this.privateGroups = new ArrayList<Receiver.Group>();
+		this.deletedGroups = new ArrayList<Receiver.Group>();
 	}
 	
 	public Packet login(User user) {
 		User loadedUser = verify(user);
 		if(loadedUser.getUsername().equals("")) {
-			packet = new Packet("LOGIN", "", loadedUser);
-			packet.setStatus("FAIL");
+			Packet packet = new Packet(PacketType.LOGIN, RequestType.NULL , loadedUser);
+			packet.setStatusType(StatusType.FAIL);
 			return packet;
 		}
-		packet = new Packet("LOGIN", "", loadedUser);
-    	packet.setStatus("SUCCESS");
+		Packet packet = new Packet(PacketType.LOGIN, RequestType.NULL , loadedUser);
+    	packet.setStatusType(StatusType.SUCCESS);
 		return packet;
 	}
 	
@@ -73,7 +73,7 @@ public class communicationSystem {
 	}
 	
 	//general user methods
-	public void addGeneralUser(GeneralUser user) {
+	public void addGeneralUser(User.GeneralUser user) {
 		generalUser.add(user);
 	}
 	
@@ -81,7 +81,7 @@ public class communicationSystem {
 		//no delete account
 	}
 	
-	public ArrayList<User> getGeneralUsers() {
+	public ArrayList<User.GeneralUser> getGeneralUsers() {
 		return generalUser;
 	}
 	
@@ -99,7 +99,7 @@ public class communicationSystem {
 	}
 	
 	//group methods
-	public void addGroup(Group group) {
+	public void addGroup(Receiver.Group group) {
 		if (group.isPrivate == true) {
 			privateGroups.add(group);
 		}
@@ -108,7 +108,7 @@ public class communicationSystem {
 		}
 	}
 	
-	public void removeGroup(Group group) {
+	public void removeGroup(Receiver.Group group) {
 		//checks for private or public then copies group to deleted groups while
 		//removing from visable groups
 		if (group.isPrivate == true) {
@@ -123,61 +123,61 @@ public class communicationSystem {
 			for (int i = 0; i < publicGroups.size(); i++) {
 			      if (publicGroups.getGroupID().equals(group.getGroupID())) {
 			    	  deletedGroups.add(publicGroups[i]);
-			    	  publicGroups.remvoe(i);
+			    	  publicGroups.remove(i);
 			      }
 			}
 		}
 	}
 	
-	public ArrayList<Group> getPublicGroups() {
+	public ArrayList<Receiver.Group> getPublicGroups() {
 		return publicGroups;
 	}
 	
-	public ArrayList<Group> getPrivateGroups() {
+	public ArrayList<Receiver.Group> getPrivateGroups() {
 		return privateGroups;
 	}
 	
-	public ArrayList<Group> getDeletedGroups() {
+	public ArrayList<Receiver.Group> getDeletedGroups() {
 		return deletedGroups;
 	}
 	
-	public void writeToGroup(Group group, Message message) {
+	public void writeToGroup(Receiver.Group group, Message message) {
 		group.addMessage(message);
 	}
 	
-	public Packet readGroup(Group group) {
+	public Packet readGroup(Receiver.Group group) {
 		packet = new Packet("REQUEST", "RECEIVE_MESSAGE", group);
 		return packet;
 	}
 	
 	//send invite groups
-	public Packet sendInvite(User user, Group group) {
+	public Packet sendInvite(User user, Receiver.Group group) {
 		packet = new Packet("REQUEST", "RECIEVE_INVITE", user, group);
 		return packet;		
 	}
 	
-	public void addUserToGroup(User user, Group group) {
+	public void addUserToGroup(User user, Receiver.Group group) {
 		group.addUser(user);
 	}
 	
 	//chat methods
-	public void addChat(Chat chat) {
+	public void addChat(Receiver.Chat chat) {
 		chats.add(chat);
 	}
 	
-	public void writeToChat(Chat chat, Message message) {
+	public void writeToChat(Receiver.Chat chat, Message message) {
 		for (i = 0; i < chats.size(); i++) {
 			if (chats[i].getChatID().equals(chat.getChatID())) {
 				chat.addMessage(message);
 			}
 			else { //first message
-				Chat newChat = new Chat(ArrayList<User> userList); // needs work
+				Receiver.Chat newChat = new Receiver.Chat(ArrayList<User> userList); // needs work
 				addChat(newChat);
 			}
 		}
 	}
 	
-	public Packet readChat(Chat chat) {
+	public Packet readChat(Receiver.Chat chat) {
 		packet = new Packet("REQUEST", "RECEIVE_MESSAGE", chat);
 		return packet;
 	}
