@@ -3,7 +3,7 @@ import packetPkg.*;
 import java.util.ArrayList;
 
 public class ComSystem {
-	private ArrayList<User.GeneralUser> generalUser;
+	private ArrayList<User> generalUser;
 	//private ArrayList<ITUser> itUser;
 	private ArrayList<User> connectedUser;
 	private ArrayList<Receiver.Chat> chats;
@@ -12,7 +12,11 @@ public class ComSystem {
 	private ArrayList<Receiver.Group> deletedGroups;
 	
 	public ComSystem() {
-		this.generalUser = new ArrayList<User.GeneralUser>();
+		this.generalUser = new ArrayList<User>();
+		User a = new User("a", "a", "1", UserType.GENERAL);
+		User b = new User("b", "b", "1", UserType.GENERAL);
+		generalUser.add(a);
+		generalUser.add(b);
 		//this.itUser = new ArrayList<ITUser>();
 		this.connectedUser = new ArrayList<User>();
 		this.chats = new ArrayList<Receiver.Chat>();
@@ -81,7 +85,7 @@ public class ComSystem {
 		//no delete account
 	}
 	
-	public ArrayList<User.GeneralUser> getGeneralUsers() {
+	public ArrayList<User> getGeneralUsers() {
 		return generalUser;
 	}
 	
@@ -182,8 +186,8 @@ public class ComSystem {
 				chat.addMessage(message);
 			}
 			else { //first message
-				Receiver.Chat newChat = new Receiver.Chat(ArrayList<User> userList); // needs work
-				addChat(newChat);
+				//Receiver.Chat newChat = new Receiver.Chat(ArrayList<User> userList); // needs work
+				//addChat(newChat);
 			}
 		}
 	}
