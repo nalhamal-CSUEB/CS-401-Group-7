@@ -16,6 +16,8 @@ public class Packet implements Serializable{
 	protected Receiver.Group group;
 	protected Receiver.Chat chat;
 	protected ArrayList<Receiver> receiverList;
+	protected ArrayList<Receiver.Group>groupList;
+	protected ArrayList<Receiver.Chat>chatList;
 	protected User user;
 	protected User.GeneralUser genUser;
 	//protected User.ITUser ITUser;
@@ -156,6 +158,14 @@ public class Packet implements Serializable{
 		return receiverList;
 	}
 	
+	public ArrayList<Receiver.Group> getGroupList(){
+		return groupList;
+	}
+	
+	public ArrayList<Receiver.Chat> getChatList(){
+		return chatList;
+	}
+	
 	public User getUser(){
 		return user;
 	}
@@ -209,6 +219,14 @@ public class Packet implements Serializable{
 	
 	public void setReceiverList(ArrayList<Receiver> newList){
 		this.receiverList = new ArrayList<Receiver>(newList);
+	}
+	
+	public void setGroupList(ArrayList<Receiver.Group> newList){
+		this.groupList = new ArrayList<Receiver.Group>(newList);
+	}
+	
+	public void setChatList(ArrayList<Receiver.Chat> newList){
+		this.chatList = new ArrayList<Receiver.Chat>(newList);
 	}
 	
 	public void setUser(User newUser){
