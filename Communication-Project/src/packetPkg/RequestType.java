@@ -16,5 +16,6 @@ public enum RequestType {
 	LEAVE_GROUP,	 //Leave Group Request
 	KICK_USER,		 //Kick User Request
 	REPORT_USER,	 //Report User Request
-	BLOCK_USER		 //Block User Request
+	BLOCK_USER,		 //Block User Request
+	NULL
 }
