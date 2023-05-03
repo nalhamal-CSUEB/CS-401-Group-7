@@ -117,7 +117,7 @@ public class GUI implements ActionListener {
 				newchatPanel = new JPanel();
 				newchatFrame.setSize(500, 500);		// size of frame
 				newchatFrame.setLocation(300, 300);	// location on the screen
-				newchatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				//newchatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				newchatFrame.setVisible(true);		// display the frame with components
 				newchatFrame.add(newchatPanel);
 				
